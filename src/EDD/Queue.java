@@ -8,10 +8,11 @@ package EDD;
  *
  * @author pedro
  */
-public class Queue <T> {
+public class Queue<T> {
     private Nodo<T> head;
     private Nodo<T> tail;
     private int size;
+
     public Queue() {
         this.head = null;
         this.tail = null;
@@ -52,38 +53,18 @@ public class Queue <T> {
     }
 
     public String travel() {
-        String toPrint = "";
+        StringBuilder toPrint = new StringBuilder();
         if (!isEmpty()) {
             Nodo<T> actual = this.head;
             while (actual != null) {
-                toPrint += actual.gettInfo() + "-->";
+                toPrint.append(actual.gettInfo()).append("-->");
                 actual = actual.getpNext();
             }
         }
-        return toPrint;
-    }
-
-    public Nodo<T> getHead() {
-        return head;
-    }
-
-    public void setHead(Nodo<T> head) {
-        this.head = head;
-    }
-
-    public Nodo<T> getTail() {
-        return tail;
-    }
-
-    public void setTail(Nodo<T> tail) {
-        this.tail = tail;
+        return toPrint.toString();
     }
 
     public int getSize() {
         return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 }

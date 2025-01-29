@@ -9,61 +9,40 @@ package EDD;
  * @author pedro
  */
 public class Proceso extends Thread {
-    private int id;
-    //Se identifica el CPU al cual pertenece
-    private int cpu;
-    private int time;
-    private String name;
-    private String status;
+    private PCB pcb; // Control Block del proceso
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
+    public Proceso(PCB pcb) {
+        this.pcb = pcb;
     }
 
-    /**
-     * @return the cpu
-     */
-    public int getCpu() {
-        return cpu;
+    @Override
+    public void run() {
+        // Simulación de la ejecución del proceso
+        while (pcb.getRemainingTime() > 0 && !Thread.currentThread().isInterrupted()) {
+            // Simular un ciclo de ejecución
+            try {
+                // Simula un segundo de tiempo de CPU
+                Thread.sleep(1000); // Representa 1 unidad de tiempo
+            } catch (InterruptedException e) {
+                // Si el hilo es interrumpido, salimos del bucle
+                System.out.println("Proceso " + pcb.getId() + " interrumpido.");
+                return; // Salimos del método run
+            }
+
+            // Decrementar el tiempo restante
+            pcb.decrementRemainingTime(1); // Decrementa 1 unidad de tiempo
+            System.out.println("Proceso " + pcb.getId() + " ejecutándose. Tiempo restante: " + pcb.getRemainingTime());
+        }
+
+        // Al finalizar, se puede actualizar el estado del proceso
+        if (pcb.getRemainingTime() <= 0) {
+            pcb.setStatus("Completed");
+            System.out.println("Proceso " + pcb.getId() + " completado.");
+        }
     }
 
-    /**
-     * @param cpu the cpu to set
-     */
-    public void setCpu(int cpu) {
-        this.cpu = cpu;
+    // Método para obtener el PCB del proceso
+    public PCB getPcb() {
+        return pcb;
     }
-
-    /**
-     * @return the time
-     */
-    public int getTime() {
-        return time;
-    }
-
-    /**
-     * @param time the time to set
-     */
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
 }
