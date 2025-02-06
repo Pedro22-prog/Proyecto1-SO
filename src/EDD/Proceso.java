@@ -11,7 +11,7 @@ package EDD;
 public class Proceso extends Thread {
     private PCB pcb; // Control Block del proceso
 
-    public Proceso(PCB pcb) {
+    public Proceso(PCB pcb, String tipo) {
         this.pcb = pcb;
     }
 
