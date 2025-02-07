@@ -8,6 +8,10 @@ package MainClasses;
  *
  * @author david
  */
-public class ProcesoCPU {
+public class ProcesoCPU extends Proceso{
+    
+    public ProcesoCPU(PCB pcb) {
+        super(pcb);
+    }
     
 }
