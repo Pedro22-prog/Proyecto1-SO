@@ -67,4 +67,8 @@ public class Queue<T> {
     public int getSize() {
         return size;
     }
+    
+     public Nodo<T> getHead() {
+        return head;
+    }
 }

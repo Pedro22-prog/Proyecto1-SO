@@ -10,6 +10,20 @@ package MainClasses;
  */
 public class Proceso extends Thread {
     private PCB pcb; // Control Block del proceso
+    private String tipo;
+    private int cant_instrucciones;
+
+    public int getCant_instrucciones() {
+        return cant_instrucciones;
+    }
+
+    public void setCant_instrucciones(int cant_instrucciones) {
+        this.cant_instrucciones = cant_instrucciones;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
 
     public Proceso(PCB pcb) {
         this.pcb = pcb;
