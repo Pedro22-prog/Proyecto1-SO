@@ -8,11 +8,14 @@ package MainClasses;
  *
  * @author pedro
  */
-<<<<<<<< HEAD:src/MainClasses/MainClasses.java
-public class MainClasses {
-========
-//Algoritmos de planificación
-public class Scheduller {
->>>>>>>> 3241285a7e4b48a017feafeedeac8fa301baf524:src/MainClasses/Scheduller.java
-    
+public class Proceso {
+    private PCB pcb; // Control Block del proceso
+
+    public Proceso(PCB pcb) {
+        this.pcb = pcb;
+    }
+    // Método para obtener el PCB del proceso
+    public PCB getPcb() {
+        return pcb;
+    }
 }
