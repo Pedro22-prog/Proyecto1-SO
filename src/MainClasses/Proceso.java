@@ -8,14 +8,12 @@ package MainClasses;
  *
  * @author pedro
  */
-public class Proceso extends Thread {
+public class Proceso {
     private PCB pcb; // Control Block del proceso
 
     public Proceso(PCB pcb) {
         this.pcb = pcb;
     }
-
-    @Override
     public void run() {
         // Simulación de la ejecución del proceso
         while (pcb.getRemainingTime() > 0 && !Thread.currentThread().isInterrupted()) {
