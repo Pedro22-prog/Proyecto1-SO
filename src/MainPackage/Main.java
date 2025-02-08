@@ -13,12 +13,6 @@ import MainClasses.Proceso;
  */
 public class Main {
      public static void main(String[] args) {
-    PCB pcbito = new PCB(1, "hola", 7);
-    Proceso p1 = new Proceso(pcbito);
-    PCB pcbita = new PCB(1, "hola", 4);
-    Proceso p2 = new Proceso(pcbita);
-    
-    p1.start();
-    p2.start();
+
     }
 }

@@ -8,10 +8,8 @@ package MainClasses;
  *
  * @author david
  */
-public class ProcesoIOBound extends Proceso{
-    
+public class ProcesoIOBound extends Proceso {
     public ProcesoIOBound(PCB pcb) {
         super(pcb);
     }
-    
 }

@@ -8,7 +8,7 @@ package MainClasses;
  *
  * @author david
  */
-public class CPU {
+public class CPU extends Thread {
     
     private int id;
     private Proceso proceso;
@@ -20,16 +20,17 @@ public class CPU {
         this.estado = estado;
     }
 
-    public Proceso getProceso() {
-        return proceso;
-    }
-
-    public void setProceso(Proceso proceso) {
-        this.proceso = proceso;
-    }
-
     /**
      * @return the id
      */
-    
+    public int getCPUid() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 }
