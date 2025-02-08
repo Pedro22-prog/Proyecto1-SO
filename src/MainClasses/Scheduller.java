@@ -8,14 +8,7 @@ package MainClasses;
  *
  * @author pedro
  */
-public class Proceso {
-    private PCB pcb; // Control Block del proceso
-
-    public Proceso(PCB pcb) {
-        this.pcb = pcb;
-    }
-    // Método para obtener el PCB del proceso
-    public PCB getPcb() {
-        return pcb;
-    }
+//Algoritmos de planificación
+public class Scheduller {
+    
 }
