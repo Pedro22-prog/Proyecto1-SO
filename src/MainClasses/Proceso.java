@@ -10,12 +10,36 @@ package MainClasses;
  */
 public class Proceso {
     private PCB pcb; // Control Block del proceso
-
-    public Proceso(PCB pcb) {
+    private boolean cpub; //Se le asigna un valor de true si es CPUBound
+    //o false si es I/O Bound
+    
+    public Proceso(PCB pcb, boolean cpub) {
         this.pcb = pcb;
+        this.cpub = cpub;
     }
     // Método para obtener el PCB del proceso
     public PCB getPcb() {
         return pcb;
+    }
+
+    /**
+     * @param pcb the pcb to set
+     */
+    public void setPcb(PCB pcb) {
+        this.pcb = pcb;
+    }
+
+    /**
+     * @return the cpub
+     */
+    public boolean isCpub() {
+        return cpub;
+    }
+
+    /**
+     * @param cpub the cpub to set
+     */
+    public void setCpub(boolean cpub) {
+        this.cpub = cpub;
     }
 }

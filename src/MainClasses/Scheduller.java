@@ -4,15 +4,26 @@
  */
 package MainClasses;
 
+import EDD.Queue;
+
 /**
  *
  * @author pedro
  */
-<<<<<<<< HEAD:src/MainClasses/MainClasses.java
-public class MainClasses {
-========
-//Algoritmos de planificación
+
 public class Scheduller {
->>>>>>>> 3241285a7e4b48a017feafeedeac8fa301baf524:src/MainClasses/Scheduller.java
+    private Queue ColaListo;
+    private Queue ColaBloqueados;
+    private Queue ColaTerminados;
+    private int quantum;
+    private Proceso p;
+    private CPU cpu;
     
+    public Scheduller(int quantum, Proceso p, CPU Cpu){
+        this.ColaListo = new Queue();
+        this.ColaBloqueados = new Queue();
+        this.ColaTerminados = new Queue();
+        this.quantum = 5;
+        this.p = p;
+    }
 }
