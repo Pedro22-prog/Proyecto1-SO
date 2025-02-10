@@ -9,11 +9,7 @@ package MainClasses;
  * @author pedro
  */
 
-public class ProcesoIOBound extends Proceso{
-    
-    public ProcesoIOBound(PCB pcb) {
-        super(pcb);
-    }
+
 
 //Algoritmos de planificación
 public class Scheduller {
