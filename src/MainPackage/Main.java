@@ -4,8 +4,6 @@
  */
 package MainPackage;
 
-import MainClasses.PCB;
-import MainClasses.Proceso;
 
 /**
  *
