@@ -8,15 +8,19 @@ package GUI;
  *
  * @author pedro
  */
-public class Home extends javax.swing.JFrame {
-
+public class Configuration extends javax.swing.JFrame {
+    public static Home h;
+    
     /**
-     * Creates new form Home
+     * Creates new form Configuration
      */
-    public Home() {
+    public Configuration(Home h) {
         initComponents();
+        this.h=h;
+        h.setVisible(false);
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,16 +32,13 @@ public class Home extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         exit = new javax.swing.JButton();
-        Configuration = new javax.swing.JButton();
-        Simulation = new javax.swing.JButton();
-        Stadistics = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        exit.setBackground(new java.awt.Color(255, 0, 0));
         exit.setText("X");
         exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,24 +47,9 @@ public class Home extends javax.swing.JFrame {
         });
         jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
 
-        Configuration.setText("Configuración");
-        Configuration.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfigurationActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Configuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, 30));
-
-        Simulation.setText("Simulación");
-        Simulation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SimulationActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Simulation, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 100, 30));
-
-        Stadistics.setText("Estadistica");
-        jPanel1.add(Stadistics, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 100, 30));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/FondoConfig.jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -290, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
@@ -71,18 +57,9 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        this.dispose();
+        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
-
-    private void ConfigurationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfigurationActionPerformed
-        // TODO add your handling code here:
-        Configuration v2 = new Configuration(this);
-    }//GEN-LAST:event_ConfigurationActionPerformed
-
-    private void SimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimulationActionPerformed
-        // TODO add your handling code here:
-        Simulation s = new Simulation(this);
-    }//GEN-LAST:event_SimulationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,29 +78,27 @@ public class Home extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Configuration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Configuration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Configuration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Configuration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Home().setVisible(true);
+                new Configuration(h).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Configuration;
-    private javax.swing.JButton Simulation;
-    private javax.swing.JButton Stadistics;
     private javax.swing.JButton exit;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
