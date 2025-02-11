@@ -4,7 +4,7 @@
  */
 package MainClasses;
 
-import EDD.Queue;
+
 import EDD.Lista;
 
 /**
@@ -46,6 +46,31 @@ public class Scheduller {
             }
         }
     }
+    
+    public void planificarHRRN() {
+    while (!ColaListo.isEmpty()) {
+        // Paso 1: Calcular el ratio de respuesta para cada proceso en la cola
+        Proceso procesoSeleccionado = null;
+        double mayorRatio = -1; // Almacena el mayor ratio encontrado
+
+        for (Proceso proceso : ColaListo) {
+            int tiempoEspera = calcularTiempoEspera(proceso);
+            int tiempoServicio = proceso.getTime();
+            double ratioRespuesta = (double) (tiempoEspera + tiempoServicio) / tiempoServicio;
+
+            // Seleccionar el proceso con el mayor ratio de respuesta
+            if (ratioRespuesta > mayorRatio) {
+                mayorRatio = ratioRespuesta;
+                procesoSeleccionado = proceso;
+            }
+        }
+
+        // Paso 2: Ejecutar el proceso seleccionado
+        if (procesoSeleccionado != null) {
+            ejecutarHRRN(procesoSeleccionado);
+        }
+    }
+}
 
     private Proceso MenorTiempoRestante() {
         Proceso menor = null;
@@ -78,5 +103,21 @@ public class Scheduller {
             proceso.setRemainingTime(proceso.getRemainingTime() - quantum);
             proceso.setStatus("Ready");
         }
+    }
+    private int calcularTiempoEspera(Proceso proceso) {
+    // En este caso, el tiempo de espera se puede calcular como
+    // el tiempo total en cola (remainingTime inicial - tiempo restante)
+        return proceso.getTime() - proceso.getRemainingTime();
+    }
+    
+    private void ejecutarHRRN(Proceso proceso) {
+        // Cambiar el estado del proceso a "Running"
+        proceso.setStatus("Running");
+        // Simular la ejecución completa del proceso (HRRN es no preventivo)
+        ColaListo.eliminar(); // Sacar el proceso de la cola de listos
+        proceso.setRemainingTime(0); // Proceso completado
+        proceso.setStatus("Completed");
+        // Mover el proceso a la cola de terminados
+        ColaTerminados.agregar(proceso);
     }
 }
