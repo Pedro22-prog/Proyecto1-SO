@@ -3,20 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/GUI/Home.java</file>
-            <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/EDD/Nodo.java</file>
             <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/EDD/Lista.java</file>
-            <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/MainPackage/Main.java</file>
+            <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/MainClasses/Proceso.java</file>
+            <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/MainClasses/PCB.java</file>
             <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/EDD/Queue.java</file>
-=======
-            <file>file:/C:/Users/david/Documents/Proyecto-1-so/Proyecto1-SO/src/MainClasses/CPU.java</file>
-            <file>file:/C:/Users/david/Documents/Proyecto-1-so/Proyecto1-SO/src/MainPackage/App.java</file>
-            <file>file:/C:/Users/david/Documents/Proyecto-1-so/Proyecto1-SO/src/MainPackage/Main.java</file>
-            <file>file:/C:/Users/david/Documents/Proyecto-1-so/Proyecto1-SO/src/GUI/Home.java</file>
-            <file>file:/C:/Users/david/Documents/Proyecto-1-so/Proyecto1-SO/src/MainClasses/PCB.java</file>
-            <file>file:/C:/Users/david/Documents/Proyecto-1-so/Proyecto1-SO/src/MainClasses/Proceso.java</file>
->>>>>>> 3241285a7e4b48a017feafeedeac8fa301baf524
+            <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/MainClasses/Scheduller.java</file>
+            <file>file:/C:/Users/pedro/OneDrive/Documents/NetBeansProjects/ProyectoSO-1/src/MainClasses/CPU.java</file>
         </group>
     </open-files>
 </project-private>
