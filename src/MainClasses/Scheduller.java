@@ -28,12 +28,9 @@ public class Scheduller {
         this.p = p;
     }
     
-    
+   
     private Scheduller(){
     //Algoritmo de planificacion FCFS
-    if(proceso.isCpub()){
-        
-    }
     
     //Allgoritmo de planificacion Round Robin
     
@@ -43,4 +40,12 @@ public class Scheduller {
     
     //Algoritmo de planificacion SPN
     }
+
+    //Logica para el manejo de los procesos 
+    
+    /*
+    Sse va a aingresar los algoritmos de planificacion dependiendo del proceso
+    Round Robin y FCFS
+    */
+
 }
