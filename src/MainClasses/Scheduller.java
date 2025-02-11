@@ -26,4 +26,11 @@ public class Scheduller {
         this.quantum = 5;
         this.p = p;
     }
+    
+    //Logica para el manejo de los procesos 
+    
+    /*
+    Sse va a aingresar los algoritmos de planificacion dependiendo del proceso
+    Round Robin y FCFS
+    */
 }
