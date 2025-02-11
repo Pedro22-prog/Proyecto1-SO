@@ -172,8 +172,11 @@ public class Proceso {
     public void setPC(int PC) {
         this.PC = PC;
     }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
+=======
+>>>>>>> 959c14b14380413a0751171723daaeeb691c1944
 }
 =======
 }
