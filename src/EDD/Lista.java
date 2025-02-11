@@ -20,6 +20,30 @@ public class Lista<T> implements Iterable<T> {
         this.pFirst = null;
     }
 
+    public Nodo<T> getpFirst() {
+        return pFirst;
+    }
+
+    public void setpFirst(Nodo<T> pFirst) {
+        this.pFirst = pFirst;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     // Método para agregar un elemento al final de la lista
     public void agregar(T elemento) {
         Nodo<T> nuevo = new Nodo<>(elemento);
