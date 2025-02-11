@@ -19,50 +19,57 @@ public class Scheduller {
     private int quantum;
     private Proceso p;
     private CPU cpu;
-<<<<<<< HEAD
-    private Proceso proceso;
-    
-    public Scheduller(int quantum, Proceso p, CPU Cpu){
-        this.ColaListo = new Queue();
-        this.ColaBloqueados = new Queue();
-        this.ColaTerminados = new Queue();
-        this.quantum = 5;
-=======
 
     public Scheduller(int quantum, Proceso p, CPU cpu) {
         this.ColaListo = new Lista<>("ColaListo", 1);
         this.ColaBloqueados = new Lista<>("ColaBloqueados", 2);
         this.ColaTerminados = new Lista<>("ColaTerminados", 3);
         this.quantum = quantum;
->>>>>>> 959c14b14380413a0751171723daaeeb691c1944
         this.p = p;
         this.cpu = cpu;
     }
-<<<<<<< HEAD
     
-   
-    private Scheduller(){
-    //Algoritmo de planificacion FCFS
-    
-    //Allgoritmo de planificacion Round Robin
-    
-    //Algoritmo de planificaacion SRT
-    
-    //Algoritmo de planificacion HRRN
-    
-    //Algoritmo de planificacion SPN
+    public void ejecutarPlanificacion(int politica) {
+        switch (politica) {
+            case 1:
+                fcfs();
+                break;
+            case 2:
+                RoundRobin();
+                break;
+            case 3:
+                SRT();
+                break;
+            case 4:
+                SJF();
+                break;
+            case 5:
+                HRRN();
+                break;
+            default:
+                System.out.println("Política de planificación no válida.");
+        }
     }
-
-    //Logica para el manejo de los procesos 
     
-    /*
-    Sse va a aingresar los algoritmos de planificacion dependiendo del proceso
-    Round Robin y FCFS
-    */
-
-}
-=======
-
+    public void RoundRobin() {
+        while (!ColaListo.isEmpty()) {
+            Proceso procesoActual = ColaListo.getpFirst().gettInfo();
+            ColaListo.eliminar();
+            
+            procesoActual.setStatus("Running");
+            int tiempoEjecutado = Math.min(procesoActual.getRemainingTime(), quantum);
+            procesoActual.setRemainingTime(procesoActual.getRemainingTime() - tiempoEjecutado);
+            
+            if (procesoActual.getRemainingTime() > 0) {
+                procesoActual.setStatus("Ready");
+                ColaListo.agregar(procesoActual);
+            } else {
+                procesoActual.setStatus("Completed");
+                ColaTerminados.agregar(procesoActual);
+            }
+        }
+    }
+    
     public void SRT() {
         while (!ColaListo.isEmpty()) {
             Proceso procesoActual = MenorTiempoRestante();
@@ -81,31 +88,26 @@ public class Scheduller {
         }
     }
     
-    public void planificarHRRN() {
-    while (!ColaListo.isEmpty()) {
-        // Paso 1: Calcular el ratio de respuesta para cada proceso en la cola
-        Proceso procesoSeleccionado = null;
-        double mayorRatio = -1; // Almacena el mayor ratio encontrado
-
-        for (Proceso proceso : ColaListo) {
-            int tiempoEspera = calcularTiempoEspera(proceso);
-            int tiempoServicio = proceso.getTime();
-            double ratioRespuesta = (double) (tiempoEspera + tiempoServicio) / tiempoServicio;
-
-            // Seleccionar el proceso con el mayor ratio de respuesta
-            if (ratioRespuesta > mayorRatio) {
-                mayorRatio = ratioRespuesta;
-                procesoSeleccionado = proceso;
-            }
-        }
-
-        // Paso 2: Ejecutar el proceso seleccionado
-        if (procesoSeleccionado != null) {
-            ejecutarHRRN(procesoSeleccionado);
+    public void HRRN(){
+        if(!ColaListo.isEmpty()){
+            Proceso pActual = null;
+            double mr = -1; //Para almacenar el mayor ratio del proceso
         }
     }
-}
 
+    public void fcfs() {
+        while (!ColaListo.isEmpty()) {
+            Proceso procesoActual = ColaListo.getpFirst().gettInfo();
+            ColaListo.eliminar();
+            
+            procesoActual.setStatus("Running");
+            procesoActual.setRemainingTime(0);
+            
+            procesoActual.setStatus("Completed");
+            ColaTerminados.agregar(procesoActual);
+        }
+    }
+    
     private Proceso MenorTiempoRestante() {
         Proceso menor = null;
         for (Proceso proceso : ColaListo) {
@@ -138,21 +140,5 @@ public class Scheduller {
             proceso.setStatus("Ready");
         }
     }
-    private int calcularTiempoEspera(Proceso proceso) {
-    // En este caso, el tiempo de espera se puede calcular como
-    // el tiempo total en cola (remainingTime inicial - tiempo restante)
-        return proceso.getTime() - proceso.getRemainingTime();
-    }
     
-    private void ejecutarHRRN(Proceso proceso) {
-        // Cambiar el estado del proceso a "Running"
-        proceso.setStatus("Running");
-        // Simular la ejecución completa del proceso (HRRN es no preventivo)
-        ColaListo.eliminar(); // Sacar el proceso de la cola de listos
-        proceso.setRemainingTime(0); // Proceso completado
-        proceso.setStatus("Completed");
-        // Mover el proceso a la cola de terminados
-        ColaTerminados.agregar(proceso);
-    }
 }
->>>>>>> 959c14b14380413a0751171723daaeeb691c1944
