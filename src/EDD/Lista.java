@@ -8,7 +8,7 @@ package EDD;
  *
  * @author pedro
  */
-public class Lista<T> {
+public class Lista<T> implements iterable<T> {
     private Nodo<T> pFirst;
     private String name;
     private int id;

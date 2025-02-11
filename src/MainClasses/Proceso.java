@@ -172,5 +172,4 @@ public class Proceso {
     public void setPC(int PC) {
         this.PC = PC;
     }
-
 }

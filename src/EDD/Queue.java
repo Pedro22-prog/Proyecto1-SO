@@ -4,6 +4,8 @@
  */
 package EDD;
 
+import MainClasses.Proceso;
+
 /**
  *
  * @author pedro
@@ -66,5 +68,9 @@ public class Queue<T> {
 
     public int getSize() {
         return size;
+    }
+
+    public void remove(Proceso menor) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
