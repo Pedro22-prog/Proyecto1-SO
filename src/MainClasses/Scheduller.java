@@ -19,49 +19,15 @@ public class Scheduller {
     private int quantum;
     private Proceso p;
     private CPU cpu;
-<<<<<<< HEAD
-    private Proceso proceso;
-    
-    public Scheduller(int quantum, Proceso p, CPU Cpu){
-        this.ColaListo = new Queue();
-        this.ColaBloqueados = new Queue();
-        this.ColaTerminados = new Queue();
-        this.quantum = 5;
-=======
 
     public Scheduller(int quantum, Proceso p, CPU cpu) {
         this.ColaListo = new Lista<>("ColaListo", 1);
         this.ColaBloqueados = new Lista<>("ColaBloqueados", 2);
         this.ColaTerminados = new Lista<>("ColaTerminados", 3);
         this.quantum = quantum;
->>>>>>> 959c14b14380413a0751171723daaeeb691c1944
         this.p = p;
         this.cpu = cpu;
     }
-<<<<<<< HEAD
-    
-   
-    private Scheduller(){
-    //Algoritmo de planificacion FCFS
-    
-    //Allgoritmo de planificacion Round Robin
-    
-    //Algoritmo de planificaacion SRT
-    
-    //Algoritmo de planificacion HRRN
-    
-    //Algoritmo de planificacion SPN
-    }
-
-    //Logica para el manejo de los procesos 
-    
-    /*
-    Sse va a aingresar los algoritmos de planificacion dependiendo del proceso
-    Round Robin y FCFS
-    */
-
-}
-=======
 
     public void SRT() {
         while (!ColaListo.isEmpty()) {
@@ -155,4 +121,3 @@ public class Scheduller {
         ColaTerminados.agregar(proceso);
     }
 }
->>>>>>> 959c14b14380413a0751171723daaeeb691c1944

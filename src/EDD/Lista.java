@@ -3,12 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-
 /**
  *
  * @author pedro
  */
-public class Lista<T> implements iterable<T> {
+import java.util.Iterator;
+
+public class Lista<T> implements Iterable<T> {
     private Nodo<T> pFirst;
     private String name;
     private int id;
@@ -43,18 +44,6 @@ public class Lista<T> implements iterable<T> {
         return info;
     }
 
-    // Método para buscar un elemento en la lista
-    public Nodo<T> buscar(T elemento) {
-        Nodo<T> actual = pFirst;
-        while (actual != null) {
-            if (actual.gettInfo().equals(elemento)) {
-                return actual; // Retorna el nodo encontrado
-            }
-            actual = actual.getpNext();
-        }
-        return null; // No encontrado
-    }
-
     // Método para recorrer la lista y retornar una representación en String
     public String recorrer() {
         StringBuilder sb = new StringBuilder();
@@ -80,5 +69,24 @@ public class Lista<T> implements iterable<T> {
             actual = actual.getpNext();
         }
         return size;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Nodo<T> current = pFirst;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public T next() {
+                T data = current.gettInfo();
+                current = current.getpNext();
+                return data;
+            }
+        };
     }
 }
