@@ -47,7 +47,7 @@ public class Scheduller {
         }
     }
     
-    public void planificarHRRN() {
+    public void HRRN() {
     while (!ColaListo.isEmpty()) {
         // Paso 1: Calcular el ratio de respuesta para cada proceso en la cola
         Proceso procesoSeleccionado = null;
