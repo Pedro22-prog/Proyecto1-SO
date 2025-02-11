@@ -173,4 +173,8 @@ public class Proceso {
         this.PC = PC;
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 783592a3891f611e1b1deacbe5579882b8779fd5
