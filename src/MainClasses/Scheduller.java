@@ -18,6 +18,7 @@ public class Scheduller {
     private int quantum;
     private Proceso p;
     private CPU cpu;
+    private Proceso proceso;
     
     public Scheduller(int quantum, Proceso p, CPU Cpu){
         this.ColaListo = new Queue();
@@ -25,5 +26,21 @@ public class Scheduller {
         this.ColaTerminados = new Queue();
         this.quantum = 5;
         this.p = p;
+    }
+    
+    
+    private Scheduller(){
+    //Algoritmo de planificacion FCFS
+    if(proceso.isCpub()){
+        
+    }
+    
+    //Allgoritmo de planificacion Round Robin
+    
+    //Algoritmo de planificaacion SRT
+    
+    //Algoritmo de planificacion HRRN
+    
+    //Algoritmo de planificacion SPN
     }
 }
