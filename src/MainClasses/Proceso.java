@@ -32,7 +32,6 @@ public class Proceso {
         this.PC = PC;
     }
     
-    
     /**
      * @return the id
      */
@@ -173,6 +172,6 @@ public class Proceso {
         this.PC = PC;
     }
 
-}
 
+}
 
