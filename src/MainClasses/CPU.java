@@ -16,10 +16,10 @@ public class CPU extends Thread {
     private boolean estado;
     private Semaphore s;
 
-    public CPU(int id, Proceso proceso, boolean estado) {
+    public CPU(int id, boolean estado) {
         this.s = s;
         this.id = id;
-        this.proceso = proceso;
+        this.proceso = null;
         this.estado = estado;
     }
 
