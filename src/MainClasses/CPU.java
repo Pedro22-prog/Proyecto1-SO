@@ -7,6 +7,7 @@ package MainClasses;
 import java.util.concurrent.Semaphore;
 import EDD.Lista; 
 import EDD.Nodo;
+import MainPackage.Main;
 
 /**
  *
@@ -70,24 +71,50 @@ public class CPU extends Thread {
         this.estado = estado;
     }
     
-    public void run(){
-        
-    }
-    
-    private boolean BuscarInterrupcion(){
-        if (!listaInterrupts.isEmpty()){
-            Nodo noSeHacerElProyecto = this.listaInterrupts.getpFirst();
-            int noMeRaspesSofia = 0;
-            while(noSeHacerElProyecto != null){
-               if (noMeRaspesSofia%2==1) {
-                   //funcion global
-               }
-               noSeHacerElProyecto = noSeHacerElProyecto.getpNext();
-               noMeRaspesSofia++;
+    public void run() {
+        while (true) {
+            try {
+                Main.semaforo.acquire();
+                if (Main.politicaActual == 0) break; // Si la simulación está detenida
+                
+                if (!Main.colaListos.isEmpty() && this.proceso == null) {
+                    Proceso p = Main.scheduler.asignarProceso(this.id);
+                    if (p != null) {
+                        this.proceso = p;
+                        proceso.setStatus("Running");
+                        proceso.setCpu(this.id);
+                        //Main.gui.updateQueueDisplays();
+                    }
+                }
+                
+                if (this.proceso != null) {
+                    //ejecutarInstruccion();
+                    //checkForInterrupt();
+                }
+                
+                Main.semaforo.release();
+                Thread.sleep(Main.cicloDuration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        return false;
-    }
+
+    
+//    private boolean BuscarInterrupcion(){
+//        if (!listaInterrupts.isEmpty()){
+//            Nodo noSeHacerElProyecto = this.listaInterrupts.getpFirst();
+//            int noMeRaspesSofia = 0;
+//            while(noSeHacerElProyecto != null){
+//               if (noMeRaspesSofia%2==1) {
+//                   //funcion global
+//               }
+//               noSeHacerElProyecto = noSeHacerElProyecto.getpNext();
+//               noMeRaspesSofia++;
+//            }
+//        }
+//        return false;
+//    }
     
     
+}
 }
