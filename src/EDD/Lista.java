@@ -19,6 +19,9 @@ public class Lista<T> implements Iterable<T> {
         this.id = id;
         this.pFirst = null;
     }
+    public Lista() {
+        this.pFirst = null;
+    }
 
     public Nodo<T> getpFirst() {
         return pFirst;

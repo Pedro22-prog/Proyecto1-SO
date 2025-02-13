@@ -9,12 +9,16 @@ package GUI;
  * @author pedro
  */
 public class Simulation extends javax.swing.JFrame {
-
+    int duracion;
     /**
      * Creates new form Simulation
      */
     public Simulation() {
         initComponents();
+        duracion=1;
+    }
+    public int getDuracionI(){
+        return duracion;
     }
 
     /**
@@ -48,6 +52,8 @@ public class Simulation extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea4 = new javax.swing.JTextArea();
         exit = new javax.swing.JButton();
+        sofiaPonme20 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -121,6 +127,17 @@ public class Simulation extends javax.swing.JFrame {
         });
         jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, -1, -1));
 
+        sofiaPonme20.setText("0");
+        sofiaPonme20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sofiaPonme20ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sofiaPonme20, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, -1));
+
+        jLabel8.setText("Duraci,on Instruccion:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 130, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 570));
 
         pack();
@@ -130,6 +147,11 @@ public class Simulation extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
+
+    private void sofiaPonme20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sofiaPonme20ActionPerformed
+        // TODO add your handling code here:
+        duracion =Integer.parseInt(this.sofiaPonme20.getText());
+    }//GEN-LAST:event_sofiaPonme20ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,6 +202,7 @@ public class Simulation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -189,5 +212,6 @@ public class Simulation extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTextField sofiaPonme20;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,8 @@
 package MainClasses;
 
 import java.util.concurrent.Semaphore;
+import EDD.Lista; 
+import EDD.Nodo;
 
 /**
  *
@@ -15,12 +17,15 @@ public class CPU extends Thread {
     private Proceso proceso;
     private boolean estado;
     private Semaphore s;
+    private Scheduller scheduler;
+    private Lista listaInterrupts;
 
     public CPU(int id, boolean estado) {
         this.s = s;
         this.id = id;
         this.proceso = null;
         this.estado = estado;
+        this.listaInterrupts= new Lista(); 
     }
 
     /**
@@ -64,4 +69,25 @@ public class CPU extends Thread {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    
+    public void run(){
+        
+    }
+    
+    private boolean BuscarInterrupcion(){
+        if (!listaInterrupts.isEmpty()){
+            Nodo noSeHacerElProyecto = this.listaInterrupts.getpFirst();
+            int noMeRaspesSofia = 0;
+            while(noSeHacerElProyecto != null){
+               if (noMeRaspesSofia%2==1) {
+                   //funcion global
+               }
+               noSeHacerElProyecto = noSeHacerElProyecto.getpNext();
+               noMeRaspesSofia++;
+            }
+        }
+        return false;
+    }
+    
+    
 }
