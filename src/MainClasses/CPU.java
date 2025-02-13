@@ -88,7 +88,7 @@ public class CPU extends Thread {
                 }
                 
                 if (this.proceso != null) {
-                    //ejecutarInstruccion();
+                    ejecutarInstruccion();
                     //checkForInterrupt();
                 }
                 
@@ -98,6 +98,9 @@ public class CPU extends Thread {
                 e.printStackTrace();
             }
         }
+        
+        
+
 
     
 //    private boolean BuscarInterrupcion(){
@@ -117,4 +120,17 @@ public class CPU extends Thread {
     
     
 }
+    private void ejecutarInstruccion() {
+        proceso.setPC(proceso.getPC() + 1);
+        proceso.setRemainingTime(proceso.getRemainingTime() - 1);
+        
+        if (proceso.getRemainingTime() <= 0) {
+            proceso.setStatus("Completed");
+            Main.colaTerminados.agregar(proceso);
+            this.proceso = null;
+        }
+    }
+    
+
+
 }
