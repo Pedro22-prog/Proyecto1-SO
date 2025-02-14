@@ -25,9 +25,18 @@ public class Main {
     public static int cicloGlobal;
     public static int politicaActual = 1;
     public static int cicloDuration;
-    public static Scheduller scheduler= new Scheduller(3, colaListos,colaBloqueados, colaTerminados);    
+    public static Scheduller scheduler= new Scheduller(5, colaListos,colaBloqueados, colaTerminados);    
     
      public static void main(String[] args) {
         
+         
+         
+         
     }
+
+    public static Scheduller getScheduler() {
+        return scheduler;
+    }
+
+    
 }

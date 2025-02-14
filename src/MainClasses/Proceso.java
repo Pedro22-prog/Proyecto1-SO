@@ -19,6 +19,16 @@ public class Proceso {
     private boolean iobound; //Se verifica si es iobound
     private int MAR; 
     private int PC; //Cantidad de programas se inicializa en 0
+    private int ExceptionDuration;
+    private int CiclosParaExcepcion;
+
+    public int getCiclosParaExcepcion() {
+        return CiclosParaExcepcion;
+    }
+
+    public void setCiclosParaExcepcion(int CiclosParaExcepcion) {
+        this.CiclosParaExcepcion = CiclosParaExcepcion;
+    }
     public Proceso(int id, String name, String status, int cpu, int time, int remainingTime, boolean cpubound, boolean iobound, int MAR, int PC){
         this.id = id;
         this.name = name;
@@ -37,6 +47,14 @@ public class Proceso {
      */
     public int getId() {
         return id;
+    }
+
+    public int getExceptionDuration() {
+        return ExceptionDuration;
+    }
+
+    public void setExceptionDuration(int ExceptionDuration) {
+        this.ExceptionDuration = ExceptionDuration;
     }
 
     /**

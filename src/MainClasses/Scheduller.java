@@ -27,6 +27,12 @@ public class Scheduller {
         this.quantum = quantum;
         
     }
+
+    public Lista<Proceso> getColaListo() {
+        return ColaListo;
+    }
+    
+    
     
     public void ejecutarPlanificacion(int politica) {
         switch (politica) {

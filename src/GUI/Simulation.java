@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import MainClasses.Proceso;
+import MainPackage.Main;
 
 /**
  *
@@ -13,9 +15,14 @@ public class Simulation extends javax.swing.JFrame {
     /**
      * Creates new form Simulation
      */
+    
+    private Main main;
+    
     public Simulation() {
         initComponents();
         duracion=1;
+        this.main = main;
+        
     }
     public int getDuracionI(){
         return duracion;
@@ -54,6 +61,7 @@ public class Simulation extends javax.swing.JFrame {
         exit = new javax.swing.JButton();
         sofiaPonme20 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        ProcessType1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -68,12 +76,17 @@ public class Simulation extends javax.swing.JFrame {
 
         jLabel3.setText("Tipo de Proceso");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
-        jPanel1.add(ProcessType, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 100, -1));
+        jPanel1.add(ProcessType, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 100, -1));
 
         jLabel4.setText("Cola de listos");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
         CreationProcess.setText("Crear");
+        CreationProcess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreationProcessActionPerformed(evt);
+            }
+        });
         jPanel1.add(CreationProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
 
         jButton1.setText("Start");
@@ -137,6 +150,7 @@ public class Simulation extends javax.swing.JFrame {
 
         jLabel8.setText("Duraci,on Instruccion:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 130, -1));
+        jPanel1.add(ProcessType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 100, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 570));
 
@@ -152,6 +166,17 @@ public class Simulation extends javax.swing.JFrame {
         // TODO add your handling code here:
         duracion =Integer.parseInt(this.sofiaPonme20.getText());
     }//GEN-LAST:event_sofiaPonme20ActionPerformed
+
+    private void CreationProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreationProcessActionPerformed
+        String nombreProceso = this.ProcessType1.getText();
+        String tipoProceso = this.ProcessType.getText();
+        
+//        Proceso proceso = new Proceso(WIDTH, tipoProceso, tipoProceso, WIDTH, WIDTH, HEIGHT, rootPaneCheckingEnabled, rootPaneCheckingEnabled, ERROR, WIDTH)
+//        
+//        this.main.getScheduler().getColaListo().agregar(elemento);
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreationProcessActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,6 +216,7 @@ public class Simulation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CreationProcess;
     private javax.swing.JTextField ProcessType;
+    private javax.swing.JTextField ProcessType1;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
