@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package MainClasses;
-
+import MainPackage.Main;
 
 import EDD.Lista;
 import MainPackage.Main;
@@ -28,7 +28,14 @@ public class Scheduller {
         this.quantum = 5;
         this.p = p;
         this.cpu = cpu;
+
     }
+
+    public Lista<Proceso> getColaListo() {
+        return ColaListo;
+    }
+    
+    
     
     public void ejecutarPlanificacion(int politica) {
         switch (politica) {
@@ -65,7 +72,7 @@ public class Scheduller {
                 procesoActual.setStatus("Ready");
                 ColaListo.agregar(procesoActual);
             } else {
-                procesoActual.setStatus("Completed");
+                procesoActual.setStatus("Exit");
                 ColaTerminados.agregar(procesoActual);
             }
         }
@@ -150,5 +157,23 @@ public class Scheduller {
             proceso.setStatus("Ready");
         }
     }
+    
+    public Proceso asignarProceso(int cpuId) {
+        switch (Main.politicaActual) {
+            case 1: // FCFS
+                return ColaListo.eliminar();
+            case 2: // Round Robin
+                Proceso p = ColaListo.getpFirst().gettInfo();
+                ColaListo.eliminar();
+                return p;
+            case 5: // HRRN
+                HRRN();
+                return ColaListo.eliminar();
+            default:
+                return null;
+        }
+    }
+    
+    
     
 }
