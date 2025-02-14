@@ -6,6 +6,7 @@ package MainClasses;
 
 
 import EDD.Lista;
+import MainPackage.Main;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Scheduller {
         this.ColaListo = new Lista<>("ColaListo", 1);
         this.ColaBloqueados = new Lista<>("ColaBloqueados", 2);
         this.ColaTerminados = new Lista<>("ColaTerminados", 3);
-        this.quantum = quantum;
+        this.quantum = 5;
         this.p = p;
         this.cpu = cpu;
     }
@@ -88,10 +89,19 @@ public class Scheduller {
         }
     }
     
-    public void HRRN(){
-        if(!ColaListo.isEmpty()){
-            Proceso pActual = null;
-            double mr = -1; //Para almacenar el mayor ratio del proceso
+    public void HRRN() {
+        Proceso selected = null;
+        double maxRatio = -1;
+        for (Proceso p : ColaListo) {
+            double waitTime = Main.cicloGlobal - p.getLlegada();
+            double ratio = (waitTime + p.getTime()) / p.getTime();
+            if (ratio > maxRatio) {
+                maxRatio = ratio;
+                selected = p;
+            }
+        }
+        if (selected != null) {
+            ejecutarProceso(selected);
         }
     }
 

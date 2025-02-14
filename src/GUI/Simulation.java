@@ -4,18 +4,28 @@
  */
 package GUI;
 
+import MainPackage.Main;
+
 /**
  *
  * @author pedro
  */
 public class Simulation extends javax.swing.JFrame {
-
+    public static Home h;
+    private Main mainSimulation;
+    private Thread simulationThread;
+    private boolean isRunning = false;
     /**
      * Creates new form Simulation
      */
-    public Simulation() {
+    public Simulation(Home h) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.h = h;
+        h.setVisible(false);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +48,7 @@ public class Simulation extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        Return = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
@@ -85,8 +95,13 @@ public class Simulation extends javax.swing.JFrame {
         jLabel5.setText("Cola de bloqueados");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, 10));
 
-        jButton3.setText("Return");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 530, -1, -1));
+        Return.setText("Return");
+        Return.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReturnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Return, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 530, -1, -1));
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -95,13 +110,13 @@ public class Simulation extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
 
         jLabel6.setText("Procesadores");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, -1, -1));
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
         jScrollPane3.setViewportView(jTextArea3);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, 260, 200));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 260, 200));
 
         jLabel7.setText("Cola Terminados");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, -1));
@@ -128,8 +143,14 @@ public class Simulation extends javax.swing.JFrame {
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
+
+    private void ReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnActionPerformed
+        // TODO add your handling code here:
+        h.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_ReturnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,7 +182,7 @@ public class Simulation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Simulation().setVisible(true);
+                new Simulation(h).setVisible(true);
             }
         });
     }
@@ -169,10 +190,10 @@ public class Simulation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CreationProcess;
     private javax.swing.JTextField ProcessType;
+    private javax.swing.JButton Return;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

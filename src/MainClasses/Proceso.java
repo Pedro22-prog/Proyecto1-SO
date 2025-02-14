@@ -19,7 +19,8 @@ public class Proceso {
     private boolean iobound; //Se verifica si es iobound
     private int MAR; 
     private int PC; //Cantidad de programas se inicializa en 0
-    public Proceso(int id, String name, String status, int cpu, int time, int remainingTime, boolean cpubound, boolean iobound, int MAR, int PC){
+    private int Llegada;
+    public Proceso(int id, String name, String status, int cpu, int time, int remainingTime, boolean cpubound, boolean iobound, int MAR, int PC, int Llegada){
         this.id = id;
         this.name = name;
         this.status = status;
@@ -30,6 +31,22 @@ public class Proceso {
         this.iobound = iobound;
         this.MAR = MAR;
         this.PC = PC;
+        this.Llegada = Llegada;
+    }
+    
+    public void TipoProceso(boolean iobound){
+        int tiempointerrupcion = 0;
+        if (iobound){
+            ProcesoIO(tiempointerrupcion);
+        }
+    }
+
+    public int getLlegada() {
+        return Llegada;
+    }
+
+    public void setLlegada(int Llegada) {
+        this.Llegada = Llegada;
     }
     
     /**
@@ -172,7 +189,15 @@ public class Proceso {
         this.PC = PC;
     }
 
-
+    public Integer ProcesoIO(int interruption){
+        int tiempo = 0;
+        if(interruption == 0){
+            System.out.println("Error no se puede tener un tiempo de interrupcion de 0");
+        }else{
+            tiempo += interruption;
+        }
+        return tiempo;
+    }
 }
 
 

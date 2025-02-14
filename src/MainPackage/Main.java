@@ -5,6 +5,7 @@
 package MainPackage;
 
 import EDD.Queue;
+import GUI.Home;
 import MainClasses.CPU;
 import MainClasses.Proceso;
 import java.util.concurrent.Semaphore;
@@ -23,7 +24,8 @@ public class Main {
     public static CPU cpu3 = new CPU(3,true); // depende
     public static int cicloGlobal;
     public static int politicaActual = 1;
-     public static void main(String[] args) {
-        
+    public static void main(String[] args) {
+        Home start = new Home();
+        start.setVisible(true);
     }
 }

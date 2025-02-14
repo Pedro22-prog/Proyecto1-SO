@@ -15,6 +15,7 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -29,14 +30,14 @@ public class Home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        SettingsWindow = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        SimulationWindow = new javax.swing.JButton();
         exit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        Results = new javax.swing.JButton();
+        ResultsWindow = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        StadisticsWindow = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,16 +49,26 @@ public class Home extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, -1, -1));
 
         jLabel2.setText("Configuración");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 80, 30));
 
-        jButton1.setText("Configuracion");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, -1));
+        SettingsWindow.setText("Configuracion");
+        SettingsWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SettingsWindowActionPerformed(evt);
+            }
+        });
+        jPanel1.add(SettingsWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, 30));
 
         jLabel3.setText("Simulación");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 70, 30));
 
-        jButton2.setText("Simulation");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
+        SimulationWindow.setText("Simulation");
+        SimulationWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SimulationWindowActionPerformed(evt);
+            }
+        });
+        jPanel1.add(SimulationWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 100, 30));
 
         exit.setBackground(new java.awt.Color(255, 0, 0));
         exit.setText("X");
@@ -66,24 +77,34 @@ public class Home extends javax.swing.JFrame {
                 exitActionPerformed(evt);
             }
         });
-        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, -1, -1));
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, -1));
 
         jLabel4.setText("Resultados");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 70, 30));
 
-        Results.setText("Resultados");
-        jPanel1.add(Results, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, -1, -1));
+        ResultsWindow.setText("Resultados");
+        ResultsWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResultsWindowActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ResultsWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 100, 30));
 
         jLabel5.setText("Estadisticas");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 70, 30));
 
-        jButton3.setText("Estadisticas");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, -1, -1));
+        StadisticsWindow.setText("Estadisticas");
+        StadisticsWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StadisticsWindowActionPerformed(evt);
+            }
+        });
+        jPanel1.add(StadisticsWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, -1, 30));
 
         jLabel6.setText("El campo de juego de los grandes");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -92,6 +113,34 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
+
+    private void StadisticsWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StadisticsWindowActionPerformed
+        // TODO add your handling code here:
+        Stadistics trabucco = new Stadistics(this);
+        this.setVisible(false);
+        trabucco.setVisible(true);
+    }//GEN-LAST:event_StadisticsWindowActionPerformed
+
+    private void SettingsWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsWindowActionPerformed
+        // TODO add your handling code here:
+        Settings c = new Settings(this);
+        this.setVisible(false);
+        c.setVisible(true);
+    }//GEN-LAST:event_SettingsWindowActionPerformed
+
+    private void SimulationWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimulationWindowActionPerformed
+        // TODO add your handling code here:
+        Simulation Quintero = new Simulation(this);
+        this.setVisible(false);
+        Quintero.setVisible(true);
+    }//GEN-LAST:event_SimulationWindowActionPerformed
+
+    private void ResultsWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResultsWindowActionPerformed
+        // TODO add your handling code here:
+        Results David = new Results(this);
+        this.setVisible(false);
+        David.setVisible(true);
+    }//GEN-LAST:event_ResultsWindowActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,11 +178,11 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Results;
+    private javax.swing.JButton ResultsWindow;
+    private javax.swing.JButton SettingsWindow;
+    private javax.swing.JButton SimulationWindow;
+    private javax.swing.JButton StadisticsWindow;
     private javax.swing.JButton exit;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

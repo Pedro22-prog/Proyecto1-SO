@@ -9,12 +9,16 @@ package GUI;
  * @author pedro
  */
 public class Stadistics extends javax.swing.JFrame {
+    public static Home h;
 
     /**
      * Creates new form Stadistics
      */
-    public Stadistics() {
+    public Stadistics(Home h) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.h =h;
+        
     }
 
     /**
@@ -32,7 +36,7 @@ public class Stadistics extends javax.swing.JFrame {
         ext = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        Return = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -60,8 +64,13 @@ public class Stadistics extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 350, 190));
 
-        jButton1.setText("Return");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 440, -1, -1));
+        Return.setText("Return");
+        Return.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReturnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Return, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 440, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 470));
 
@@ -70,8 +79,14 @@ public class Stadistics extends javax.swing.JFrame {
 
     private void extActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_extActionPerformed
+
+    private void ReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnActionPerformed
+        // TODO add your handling code here:
+        h.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_ReturnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,14 +118,14 @@ public class Stadistics extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Stadistics().setVisible(true);
+                new Stadistics(h).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Return;
     private javax.swing.JButton ext;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
