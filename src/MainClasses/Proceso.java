@@ -217,6 +217,11 @@ public class Proceso {
         }
         return tiempo;
     }
+    
+    @Override
+public String toString() {
+    return name + " (T:" + time + "|R:" + remainingTime + ")"; 
+}
 }
 
 

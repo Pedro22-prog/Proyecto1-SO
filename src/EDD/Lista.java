@@ -74,14 +74,17 @@ public class Lista<T> implements Iterable<T> {
 
     // Método para recorrer la lista y retornar una representación en String
     public String recorrer() {
-        StringBuilder sb = new StringBuilder();
-        Nodo<T> actual = pFirst;
-        while (actual != null) {
-            sb.append(actual.gettInfo()).append(" --> ");
-            actual = actual.getpNext();
-        }
-        return sb.toString();
+    if (pFirst == null) return "Vacía";
+    
+    StringBuilder sb = new StringBuilder();
+    Nodo<T> actual = pFirst;
+    while (actual != null) {
+        sb.append(actual.gettInfo().toString());
+        if (actual.getpNext() != null) sb.append(" --> ");
+        actual = actual.getpNext();
     }
+    return sb.toString();
+}
 
     // Método para verificar si la lista está vacía
     public boolean isEmpty() {
