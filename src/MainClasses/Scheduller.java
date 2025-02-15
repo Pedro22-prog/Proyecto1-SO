@@ -4,9 +4,14 @@
  */
 package MainClasses;
 import MainPackage.Main;
+import java.util.Comparator;
 
 import EDD.Lista;
+
 import MainPackage.Main;
+
+import EDD.Nodo;
+
 
 /**
  *
@@ -18,84 +23,118 @@ public class Scheduller {
     private Lista<Proceso> ColaBloqueados;
     private Lista<Proceso> ColaTerminados;
     private int quantum;
-    private Proceso p;
     private CPU cpu;
+    private Proceso procesoActual;
 
-    public Scheduller(int quantum, Proceso p, CPU cpu) {
-        this.ColaListo = new Lista<>("ColaListo", 1);
-        this.ColaBloqueados = new Lista<>("ColaBloqueados", 2);
-        this.ColaTerminados = new Lista<>("ColaTerminados", 3);
+    public Scheduller(int quantum,  Lista ColaListo, Lista ColaBloqueados, Lista ColaTerminados) {
+        this.ColaListo = ColaListo;
+        this.ColaBloqueados = ColaBloqueados;
+        this.ColaTerminados = ColaTerminados;
         this.quantum = 5;
-        this.p = p;
-        this.cpu = cpu;
+        this.procesoActual = null;
+
 
     }
 
     public Lista<Proceso> getColaListo() {
         return ColaListo;
     }
+
+    public Lista<Proceso> getColaBloqueados() {
+        return ColaBloqueados;
+    }
+
+    public void setColaBloqueados(Lista<Proceso> ColaBloqueados) {
+        this.ColaBloqueados = ColaBloqueados;
+    }
+
+    public Lista<Proceso> getColaTerminados() {
+        return ColaTerminados;
+    }
+
+    public void setColaTerminados(Lista<Proceso> ColaTerminados) {
+        this.ColaTerminados = ColaTerminados;
+    }
+
+    public int getQuantum() {
+        return quantum;
+    }
+
+    public void setQuantum(int quantum) {
+        this.quantum = quantum;
+    }
+
+    public CPU getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(CPU cpu) {
+        this.cpu = cpu;
+    }
+
+    public Proceso getProcesoActual() {
+        return procesoActual;
+    }
+
+    public void setProcesoActual(Proceso procesoActual) {
+        this.procesoActual = procesoActual;
+    }
     
     
     
-    public void ejecutarPlanificacion(int politica) {
+
+    
+    public Proceso ejecutarPlanificacion(int politica) {
         switch (politica) {
-            case 1:
-                fcfs();
-                break;
-            case 2:
-                RoundRobin();
-                break;
-            case 3:
-                SRT();
-                break;
-            case 4:
-                SJF();
-                break;
-            case 5:
-                HRRN();
-                break;
-            default:
-                System.out.println("Política de planificación no válida.");
+            case 1 -> fcfs();
+            case 2 -> RoundRobin();
+            case 3 -> SRT();
+            case 4 -> SJF();
+            case 5 -> HRRN();
+            default -> System.out.println("Política inválida");
         }
+        return procesoActual; // Retorna el proceso seleccionado
     }
     
     public void RoundRobin() {
         while (!ColaListo.isEmpty()) {
-            Proceso procesoActual = ColaListo.getpFirst().gettInfo();
+            procesoActual = ColaListo.getpFirst().gettInfo();
+            
             ColaListo.eliminar();
-            
             procesoActual.setStatus("Running");
-            int tiempoEjecutado = Math.min(procesoActual.getRemainingTime(), quantum);
-            procesoActual.setRemainingTime(procesoActual.getRemainingTime() - tiempoEjecutado);
             
-            if (procesoActual.getRemainingTime() > 0) {
-                procesoActual.setStatus("Ready");
-                ColaListo.agregar(procesoActual);
-            } else {
-                procesoActual.setStatus("Exit");
-                ColaTerminados.agregar(procesoActual);
-            }
+//            int tiempoEjecutado = Math.min(procesoActual.getRemainingTime(), quantum);
+//            procesoActual.setRemainingTime(procesoActual.getRemainingTime() - tiempoEjecutado);
+//            
+//            if (procesoActual.getRemainingTime() > 0) {
+//                procesoActual.setStatus("Ready");
+//                ColaListo.agregar(procesoActual);
+//            } else {
+//                procesoActual.setStatus("Exit");
+//                ColaTerminados.agregar(procesoActual);
+//            }
         }
     }
     
     public void SRT() {
         while (!ColaListo.isEmpty()) {
-            Proceso procesoActual = MenorTiempoRestante();
+            procesoActual = MenorTiempoRestante();
             if (procesoActual != null) {
-                ejecutarProceso(procesoActual);
+                //ejecutarProceso(procesoActual);
             }
         }
     }
 
     public void SJF() {
         while (!ColaListo.isEmpty()) {
-            Proceso procesoActual = MenorTiempoTotal();
+            procesoActual = MenorTiempoTotal();
             if (procesoActual != null) {
-                ejecutarProceso(procesoActual);
+                //ejecutarProceso(procesoActual);
             }
         }
     }
     
+
     public void HRRN() {
         Proceso selected = null;
         double maxRatio = -1;
@@ -108,10 +147,9 @@ public class Scheduller {
             }
         }
         if (selected != null) {
-            ejecutarProceso(selected);
+            //ejecutarProceso(selected);
         }
     }
-
     public void fcfs() {
         while (!ColaListo.isEmpty()) {
             Proceso procesoActual = ColaListo.getpFirst().gettInfo();
@@ -125,7 +163,7 @@ public class Scheduller {
         }
     }
     
-    private Proceso MenorTiempoRestante() {
+    public Proceso MenorTiempoRestante() {
         Proceso menor = null;
         for (Proceso proceso : ColaListo) {
             if (menor == null || proceso.getRemainingTime() < menor.getRemainingTime()) {
@@ -135,7 +173,7 @@ public class Scheduller {
         return menor;
     }
 
-    private Proceso MenorTiempoTotal() {
+    public Proceso MenorTiempoTotal() {
         Proceso menor = null;
         for (Proceso proceso : ColaListo) {
             if (menor == null || proceso.getTime() < menor.getTime()) {
@@ -145,34 +183,41 @@ public class Scheduller {
         return menor;
     }
 
-    private void ejecutarProceso(Proceso proceso) {
-        proceso.setStatus("Running");
-        if (proceso.getRemainingTime() <= quantum) {
-            proceso.setRemainingTime(0);
-            ColaListo.eliminar();
-            proceso.setStatus("Completed");
-            ColaTerminados.agregar(proceso);
-        } else {
-            proceso.setRemainingTime(proceso.getRemainingTime() - quantum);
-            proceso.setStatus("Ready");
-        }
+//    private void ejecutarProceso(Proceso proceso) {
+//        proceso.setStatus("Running");
+//        if (proceso.getRemainingTime() <= quantum) {
+//            proceso.setRemainingTime(0);
+//            ColaListo.eliminar();
+//            proceso.setStatus("Completed");
+//            ColaTerminados.agregar(proceso);
+//        } else {
+//            proceso.setRemainingTime(proceso.getRemainingTime() - quantum);
+//            proceso.setStatus("Ready");
+//        }
+//    }
+    
+    private Lista bubbleSort(Lista list, Comparator comparator) {
+        if (list.getSize() <= 1) return list;
+
+        boolean swapped;
+        do {
+            swapped = false;
+            Nodo current = list.getpFirst();
+            while (current != null && current.getpNext() != null) {
+                if (comparator.compare(current.gettInfo(), current.getpNext().gettInfo()) > 0) {
+                    Object temp = current.gettInfo();
+                    current.settInfo(current.getpNext().gettInfo());
+                    current.getpNext().settInfo(temp);
+                    swapped = true;
+                }
+                current = current.getpNext();
+            }
+        } while (swapped);
+
+        return list;
     }
     
-    public Proceso asignarProceso(int cpuId) {
-        switch (Main.politicaActual) {
-            case 1: // FCFS
-                return ColaListo.eliminar();
-            case 2: // Round Robin
-                Proceso p = ColaListo.getpFirst().gettInfo();
-                ColaListo.eliminar();
-                return p;
-            case 5: // HRRN
-                HRRN();
-                return ColaListo.eliminar();
-            default:
-                return null;
-        }
-    }
+    
     
     
     

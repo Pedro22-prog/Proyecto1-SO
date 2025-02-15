@@ -4,25 +4,12 @@
  */
 package MainPackage;
 
-import EDD.Queue;
-import GUI.Home;
 import EDD.Lista;
 import MainClasses.CPU;
 import MainClasses.Proceso;
 import MainClasses.Scheduller;
 import java.util.concurrent.Semaphore;
-
 import GUI.Home;
-
-import MainClasses.CPU;
-
-import MainClasses.CPU;
-
-import EDD.Lista;
-
-import java.util.concurrent.Semaphore;
-
-import EDD.Lista;
 
 /**
  *
@@ -38,10 +25,18 @@ public class Main {
     public static CPU cpu3 = new CPU(3,true); // depende
     public static int cicloGlobal;
     public static int politicaActual = 1;
+    public static int cicloDuration;
     
-    public static void main(String[] args) {
-        Home start = new Home();
-    }
+    public static Scheduller scheduler= new Scheduller(5, colaListos,colaBloqueados, colaTerminados);    
 
+     public static void main(String[] args) {
+         Home start = new Home();
+         
+         
+         
+    }
+    public static Scheduller getScheduler() {
+        return scheduler;
+    }
     
 }

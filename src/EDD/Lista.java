@@ -8,6 +8,7 @@ package EDD;
  * @author pedro
  */
 import java.util.Iterator;
+import MainClasses.Proceso;
 
 public class Lista<T> implements Iterable<T> {
     private Nodo<T> pFirst;
@@ -97,6 +98,24 @@ public class Lista<T> implements Iterable<T> {
         }
         return size;
     }
+    
+    public void eliminar(Proceso p) {
+    if (pFirst == null) return;
+    
+    if (pFirst.gettInfo().equals(p)) {
+        pFirst = pFirst.getpNext();
+        return;
+    }
+    
+    Nodo actual = pFirst;
+    while (actual.getpNext() != null && !actual.getpNext().gettInfo().equals(p)) {
+        actual = actual.getpNext();
+    }
+    
+    if (actual.getpNext() != null) {
+        actual.setpNext(actual.getpNext().getpNext());
+    }
+}
 
     @Override
     public Iterator<T> iterator() {
