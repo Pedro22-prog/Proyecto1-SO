@@ -86,139 +86,99 @@ public class Scheduller {
     
     public Proceso ejecutarPlanificacion(int politica) {
         switch (politica) {
-            case 1 -> fcfs();
-            case 2 -> RoundRobin();
-            case 3 -> SRT();
-            case 4 -> SJF();
-            case 5 -> HRRN();
-            default -> System.out.println("Política inválida");
+            case 1 -> ordenarFCFS();
+            case 2 -> ordenarRoundRobin();
+            case 3 -> ordenarSRT();
+            case 4 -> ordenarSJF();
+            case 5 -> ordenarHRRN();
+            default -> throw new IllegalArgumentException("Política inválida");
         }
-        return procesoActual; // Retorna el proceso seleccionado
+        return ColaListo.isEmpty() ? null : ColaListo.getpFirst().gettInfo();
     }
-    
-    public void RoundRobin() {
-        while (!ColaListo.isEmpty()) {
-            procesoActual = ColaListo.getpFirst().gettInfo();
-            
-            ColaListo.eliminar();
-            procesoActual.setStatus("Running");
-            
-//            int tiempoEjecutado = Math.min(procesoActual.getRemainingTime(), quantum);
-//            procesoActual.setRemainingTime(procesoActual.getRemainingTime() - tiempoEjecutado);
-//            
-//            if (procesoActual.getRemainingTime() > 0) {
-//                procesoActual.setStatus("Ready");
-//                ColaListo.agregar(procesoActual);
-//            } else {
-//                procesoActual.setStatus("Exit");
-//                ColaTerminados.agregar(procesoActual);
-//            }
-        }
+
+    //-----------------------------------------
+    // Métodos de ordenamiento para cada política
+    //-----------------------------------------
+    private void ordenarFCFS() {
+        ordenarPorFCFS();
+        // FCFS no necesita ordenamiento (se mantiene el orden de llegada)
     }
-    
-    public void SRT() {
-        while (!ColaListo.isEmpty()) {
-            procesoActual = MenorTiempoRestante();
-            if (procesoActual != null) {
-                //ejecutarProceso(procesoActual);
-            }
+
+    private void ordenarRoundRobin() {
+        ordenarPorFCFS();
+        // RR solo mueve el proceso al final si no terminó (se maneja en la CPU)
+    }
+
+    private void ordenarSRT() {
+        bubbleSort(new ComparatorSRT());
+    }
+
+    private void ordenarSJF() {
+        bubbleSort(new ComparatorSJF());
+    }
+
+    private void ordenarHRRN() {
+        bubbleSort(new ComparatorHRRN());
+    }
+
+    //-----------------------------------------
+    // Implementación de comparadores
+    //-----------------------------------------
+    private static class ComparatorSRT implements Comparator<Proceso> {
+        @Override
+        public int compare(Proceso p1, Proceso p2) {
+            return Integer.compare(p1.getRemainingTime(), p2.getRemainingTime());
         }
     }
 
-    public void SJF() {
-        while (!ColaListo.isEmpty()) {
-            procesoActual = MenorTiempoTotal();
-            if (procesoActual != null) {
-                //ejecutarProceso(procesoActual);
-            }
+    private static class ComparatorSJF implements Comparator<Proceso> {
+        @Override
+        public int compare(Proceso p1, Proceso p2) {
+            return Integer.compare(p1.getTime(), p2.getTime());
+        }
+    }
+
+    private static class ComparatorHRRN implements Comparator<Proceso> {
+        @Override
+        public int compare(Proceso p1, Proceso p2) {
+            double ratio1 = (Main.cicloGlobal - p1.getLlegada() + p1.getTime()) / p1.getTime();
+            double ratio2 = (Main.cicloGlobal - p2.getLlegada() + p2.getTime()) / p2.getTime();
+            return Double.compare(ratio2, ratio1); // Orden descendente
+        }
+    }
+    private static class ComparatorFCFS implements Comparator<Proceso> {
+        @Override
+        public int compare(Proceso p1, Proceso p2) {
+            return Integer.compare(p1.getLlegada(), p2.getLlegada());
         }
     }
     
-
-    public void HRRN() {
-        Proceso selected = null;
-        double maxRatio = -1;
-        for (Proceso p : ColaListo) {
-            double waitTime = Main.cicloGlobal - p.getLlegada();
-            double ratio = (waitTime + p.getTime()) / p.getTime();
-            if (ratio > maxRatio) {
-                maxRatio = ratio;
-                selected = p;
-            }
-        }
-        if (selected != null) {
-            //ejecutarProceso(selected);
-        }
+    private void ordenarPorFCFS() {
+        bubbleSort(new ComparatorFCFS());
     }
-    public void fcfs() {
-        while (!ColaListo.isEmpty()) {
-            Proceso procesoActual = ColaListo.getpFirst().gettInfo();
-            ColaListo.eliminar();
-            
-            procesoActual.setStatus("Running");
-            procesoActual.setRemainingTime(0);
-            
-            procesoActual.setStatus("Completed");
-            ColaTerminados.agregar(procesoActual);
-        }
-    }
-    
-    public Proceso MenorTiempoRestante() {
-        Proceso menor = null;
-        for (Proceso proceso : ColaListo) {
-            if (menor == null || proceso.getRemainingTime() < menor.getRemainingTime()) {
-                menor = proceso;
-            }
-        }
-        return menor;
-    }
-
-    public Proceso MenorTiempoTotal() {
-        Proceso menor = null;
-        for (Proceso proceso : ColaListo) {
-            if (menor == null || proceso.getTime() < menor.getTime()) {
-                menor = proceso;
-            }
-        }
-        return menor;
-    }
-
-//    private void ejecutarProceso(Proceso proceso) {
-//        proceso.setStatus("Running");
-//        if (proceso.getRemainingTime() <= quantum) {
-//            proceso.setRemainingTime(0);
-//            ColaListo.eliminar();
-//            proceso.setStatus("Completed");
-//            ColaTerminados.agregar(proceso);
-//        } else {
-//            proceso.setRemainingTime(proceso.getRemainingTime() - quantum);
-//            proceso.setStatus("Ready");
-//        }
-//    }
-    
-    private Lista bubbleSort(Lista list, Comparator comparator) {
-        if (list.getSize() <= 1) return list;
+    //-----------------------------------------
+    // Método de ordenamiento genérico
+    //-----------------------------------------
+    private void bubbleSort(Comparator<Proceso> comparator) {
+        if (ColaListo.getSize() <= 1) return;
 
         boolean swapped;
         do {
             swapped = false;
-            Nodo current = list.getpFirst();
-            while (current != null && current.getpNext() != null) {
-                if (comparator.compare(current.gettInfo(), current.getpNext().gettInfo()) > 0) {
-                    Object temp = current.gettInfo();
-                    current.settInfo(current.getpNext().gettInfo());
-                    current.getpNext().settInfo(temp);
+            Nodo<Proceso> actual = ColaListo.getpFirst();
+            while (actual != null && actual.getpNext() != null) {
+                Proceso p1 = actual.gettInfo();
+                Proceso p2 = actual.getpNext().gettInfo();
+
+                if (comparator.compare(p1, p2) > 0) {
+                    // Intercambiar nodos
+                    Proceso temp = p1;
+                    actual.settInfo(p2);
+                    actual.getpNext().settInfo(temp);
                     swapped = true;
                 }
-                current = current.getpNext();
+                actual = actual.getpNext();
             }
         } while (swapped);
-
-        return list;
     }
-    
-    
-    
-    
-    
 }

@@ -162,7 +162,7 @@ public void run() {
                     this.proceso.setStatus("Exit");
                     Main.colaTerminados.agregar(this.proceso);
                     this.proceso = null;
-                    //Main.gui.updateQueueDisplays();
+                    //Colocar actualizar la gui
                 }
             }
             
@@ -206,23 +206,7 @@ public void run() {
     }
     
 
-//    private void checkForInterrupt() {
-//        if (proceso.isIobound() && (proceso.getPC() % proceso.getCiclosParaExcepcion() == 0)) { 
-//            proceso.setStatus("Blocked");
-//            Main.colaBloqueados.agregar(proceso);
-//            new Thread(() -> {
-//                try {
-//                    Thread.sleep(proceso.getExceptionDuration() * Main.cicloDuration);
-//                    proceso.setStatus("Ready");
-//                    Main.colaListos.agregar(proceso);
-//                    //Main.gui.updateQueueDisplays();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }).start();
-//            this.proceso = null;
-//        }
-//    }
+
 
     private void checkForInterrupt() {
         if (proceso.isIobound() && (proceso.getPC() % proceso.getCiclosParaExcepcion() == 0)) { 
@@ -230,13 +214,13 @@ public void run() {
             Main.colaBloqueados.agregar(proceso);
             new Thread(() -> {
                 try {
-                    for (int i = 0; i <= proceso.getExceptionDuration();i++){
+                    for (int i = 0; i < proceso.getExceptionDuration();i++){
                       Thread.sleep(Main.cicloDuration);
                     }
                     
                     proceso.setStatus("Ready");
                     Main.colaListos.agregar(proceso);
-                    //Main.gui.updateQueueDisplays();
+                    //Colocar actualizar la gui
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
