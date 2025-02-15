@@ -9,12 +9,15 @@ package GUI;
  * @author pedro
  */
 public class Simulation extends javax.swing.JFrame {
+    public static Home h;
 
     /**
      * Creates new form Simulation
      */
-    public Simulation() {
+    public Simulation(Home h) {
         initComponents();
+        this.h=h;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -86,6 +89,11 @@ public class Simulation extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, 10));
 
         jButton3.setText("Return");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 530, -1, -1));
 
         jTextArea2.setColumns(20);
@@ -128,8 +136,14 @@ public class Simulation extends javax.swing.JFrame {
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        h.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,7 +175,7 @@ public class Simulation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Simulation().setVisible(true);
+                new Simulation(h).setVisible(true);
             }
         });
     }

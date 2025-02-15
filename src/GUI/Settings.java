@@ -9,12 +9,14 @@ package GUI;
  * @author pedro
  */
 public class Settings extends javax.swing.JFrame {
-
+    public static Home h;
     /**
      * Creates new form Settings
      */
-    public Settings() {
+    public Settings(Home h) {
         initComponents();
+        this.h=h;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -45,6 +47,11 @@ public class Settings extends javax.swing.JFrame {
 
         exit.setBackground(new java.awt.Color(255, 0, 0));
         exit.setText("X");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
         jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, -1, -1));
 
         jLabel2.setText("Cantidad de Procesadores");
@@ -55,6 +62,11 @@ public class Settings extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, 20));
 
         jButton1.setText("Return");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, -1, -1));
         jPanel1.add(CreationProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 120, -1));
 
@@ -62,6 +74,18 @@ public class Settings extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        h.setVisible(true);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,7 +117,7 @@ public class Settings extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Settings().setVisible(true);
+                new Settings(h).setVisible(true);
             }
         });
     }

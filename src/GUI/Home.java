@@ -15,6 +15,7 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -29,9 +30,9 @@ public class Home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        settingswindow = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        simulationbotton = new javax.swing.JButton();
         exit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         Results = new javax.swing.JButton();
@@ -50,14 +51,24 @@ public class Home extends javax.swing.JFrame {
         jLabel2.setText("Configuración");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
 
-        jButton1.setText("Configuracion");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, -1));
+        settingswindow.setText("Configuracion");
+        settingswindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingswindowActionPerformed(evt);
+            }
+        });
+        jPanel1.add(settingswindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, -1));
 
         jLabel3.setText("Simulación");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
 
-        jButton2.setText("Simulation");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
+        simulationbotton.setText("Simulation");
+        simulationbotton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simulationbottonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(simulationbotton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
 
         exit.setBackground(new java.awt.Color(255, 0, 0));
         exit.setText("X");
@@ -92,6 +103,20 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
+
+    private void settingswindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingswindowActionPerformed
+        // TODO add your handling code here:
+        Settings s = new Settings(this);
+        s.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_settingswindowActionPerformed
+
+    private void simulationbottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simulationbottonActionPerformed
+        // TODO add your handling code here:
+        Simulation Quintero = new Simulation(this);
+        this.setVisible(false);
+        Quintero.setVisible(true);
+    }//GEN-LAST:event_simulationbottonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,8 +156,6 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Results;
     private javax.swing.JButton exit;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -141,5 +164,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton settingswindow;
+    private javax.swing.JButton simulationbotton;
     // End of variables declaration//GEN-END:variables
 }

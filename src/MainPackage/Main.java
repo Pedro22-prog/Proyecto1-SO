@@ -4,12 +4,16 @@
  */
 package MainPackage;
 
+import GUI.Home;
+
 /**
  *
  * @author pedro
  */
 public class Main {
      public static void main(String[] args) {
+         Home start = new Home();
+         start.setVisible(true);
         
     }
 }
