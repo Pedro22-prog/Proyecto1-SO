@@ -62,7 +62,14 @@ public class Simulation extends javax.swing.JFrame {
         exit = new javax.swing.JButton();
         sofiaPonme20 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        ProcessType1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextArea5 = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextArea6 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -73,14 +80,14 @@ public class Simulation extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         jLabel2.setText("Crear Nuevo proceso");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
         jLabel3.setText("Tipo de Proceso");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
-        jPanel1.add(ProcessType, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 100, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        jPanel1.add(ProcessType, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 100, -1));
 
         jLabel4.setText("Cola de listos");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
 
         CreationProcess.setText("Crear");
         CreationProcess.addActionListener(new java.awt.event.ActionListener() {
@@ -88,22 +95,22 @@ public class Simulation extends javax.swing.JFrame {
                 CreationProcessActionPerformed(evt);
             }
         });
-        jPanel1.add(CreationProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
+        jPanel1.add(CreationProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
 
         jButton1.setText("Start");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 530, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 650, -1, -1));
 
         jButton2.setText("Stop");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 530, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 650, -1, -1));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, -1, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, -1, -1));
 
         jLabel5.setText("Cola de bloqueados");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, 10));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, -1, 10));
 
         Return.setText("Return");
         Return.addActionListener(new java.awt.event.ActionListener() {
@@ -111,13 +118,13 @@ public class Simulation extends javax.swing.JFrame {
                 ReturnActionPerformed(evt);
             }
         });
-        jPanel1.add(Return, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 530, -1, -1));
+        jPanel1.add(Return, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 650, -1, -1));
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 410, -1, -1));
 
         jLabel6.setText("Procesadores");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
@@ -126,16 +133,16 @@ public class Simulation extends javax.swing.JFrame {
         jTextArea3.setRows(5);
         jScrollPane3.setViewportView(jTextArea3);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 260, 200));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 260, 140));
 
         jLabel7.setText("Cola Terminados");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, -1, -1));
 
         jTextArea4.setColumns(20);
         jTextArea4.setRows(5);
         jScrollPane4.setViewportView(jTextArea4);
 
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, -1, -1));
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 540, -1, -1));
 
         exit.setBackground(new java.awt.Color(255, 0, 0));
         exit.setText("X");
@@ -152,13 +159,36 @@ public class Simulation extends javax.swing.JFrame {
                 sofiaPonme20ActionPerformed(evt);
             }
         });
-        jPanel1.add(sofiaPonme20, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, -1));
+        jPanel1.add(sofiaPonme20, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
 
-        jLabel8.setText("Duraci,on Instruccion:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 130, -1));
-        jPanel1.add(ProcessType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 100, -1));
+        jLabel8.setText("Duracionn Instruccion:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 570));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, -1, -1));
+
+        jLabel9.setText("Procesador 1");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, -1, -1));
+
+        jLabel10.setText("Procesador 2");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, -1, -1));
+
+        jTextArea5.setColumns(20);
+        jTextArea5.setRows(5);
+        jScrollPane5.setViewportView(jTextArea5);
+
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 260, 250, 160));
+
+        jLabel11.setText("Procesador 3");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 430, -1, -1));
+
+        jTextArea6.setColumns(20);
+        jTextArea6.setRows(5);
+        jScrollPane6.setViewportView(jTextArea6);
+
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 450, 250, 140));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -180,7 +210,7 @@ public class Simulation extends javax.swing.JFrame {
     }//GEN-LAST:event_sofiaPonme20ActionPerformed
 
     private void CreationProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreationProcessActionPerformed
-        String nombreProceso = this.ProcessType1.getText();
+
         String tipoProceso = this.ProcessType.getText();
         
 //        Proceso proceso = new Proceso(WIDTH, tipoProceso, tipoProceso, WIDTH, WIDTH, HEIGHT, rootPaneCheckingEnabled, rootPaneCheckingEnabled, ERROR, WIDTH)
@@ -228,12 +258,14 @@ public class Simulation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CreationProcess;
     private javax.swing.JTextField ProcessType;
-    private javax.swing.JTextField ProcessType1;
     private javax.swing.JButton Return;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -241,15 +273,20 @@ public class Simulation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTextArea jTextArea5;
+    private javax.swing.JTextArea jTextArea6;
     private javax.swing.JTextField sofiaPonme20;
     // End of variables declaration//GEN-END:variables
 }

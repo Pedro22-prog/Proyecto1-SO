@@ -42,6 +42,8 @@ public class Settings extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         ProcessType = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -62,7 +64,7 @@ public class Settings extends javax.swing.JFrame {
 
         jLabel2.setText("Cantidad de Procesadores");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
-        jPanel1.add(CreationCPU, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 110, 30));
+        jPanel1.add(CreationCPU, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 140, 30));
 
         jLabel3.setText("Cantidad de Procesos");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, 20));
@@ -80,14 +82,14 @@ public class Settings extends javax.swing.JFrame {
                 CreationProcessActionPerformed(evt);
             }
         });
-        jPanel1.add(CreationProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 120, 30));
+        jPanel1.add(CreationProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 140, 30));
 
         jLabel4.setText("Tipo de Proceso:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
 
         jLabel5.setText("Duración Proceso");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 120, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, -1, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 150, -1));
 
         ProcessType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ProcessType.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +98,10 @@ public class Settings extends javax.swing.JFrame {
             }
         });
         jPanel1.add(ProcessType, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
+
+        jLabel6.setText("Tiempo de interrupcion:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 130, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 360));
 
@@ -168,7 +174,9 @@ public class Settings extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
