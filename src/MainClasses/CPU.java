@@ -114,10 +114,11 @@ public void run() {
             if (this.proceso != null) {
                 boolean isPreemptive = (Main.politicaActual == 2 || Main.politicaActual == 3); // RR o SRT
                 boolean shouldPreempt = false;
+                quantumCount++;
                 
                 // Lógica de expulsión
                 if (Main.politicaActual == 2) { // Round Robin
-                    quantumCount++;
+                    
                     if (quantumCount >= Main.scheduler.getQuantum()) {
                         shouldPreempt = true;
                         quantumCount = 0;
@@ -134,7 +135,12 @@ public void run() {
                 if (shouldPreempt && isPreemptive) {
                     this.proceso.setStatus("Ready");
                     Main.colaListos.agregar(this.proceso);
+                    
                     this.proceso = null;
+                    String estado = (getProceso() != null) ? 
+                    getProceso().getName() : "SO";
+                System.out.println("CPU " + getCPUid() + ": " + estado);
+
                     //Main.gui.updateQueueDisplays();
                 }
             }
@@ -232,6 +238,9 @@ private void checkForInterrupt() {
         procesoInterrumpido.setStatus("Blocked");
         Main.colaBloqueados.agregar(procesoInterrumpido);
         this.proceso = null;
+        String estado = (getProceso() != null) ? 
+                    getProceso().getName() : "SO";
+                System.out.println("CPU " + getCPUid() + ": " + estado);
     }
 }
 

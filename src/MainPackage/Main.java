@@ -22,7 +22,7 @@ public class Main {
     public static Lista<Proceso> colaTerminados = new Lista<>();
     public static CPU[] cpus = new CPU[2]; 
     public static int cicloGlobal = 0;
-    public static int politicaActual = 2; // Round Robin
+    public static int politicaActual = 1; // Round Robin
     public static int cicloDuration = 3000; // 3 segundos por ciclo
     public static Scheduller scheduler = new Scheduller(5, colaListos, colaBloqueados, colaTerminados);
     public static boolean cambioRealizado = false;
@@ -39,11 +39,11 @@ public class Main {
         }
 
         while (true) {
-            // Cambiar política a SJF en el ciclo 6
+//             Cambiar política a SJF en el ciclo 6
             if (cicloGlobal == 6 && !cambioRealizado) {
-                cambiarPolitica(4); // SJF
+                cambiarPolitica(2); // SJF
                 cambioRealizado = true;
-                System.out.println("\n=== POLÍTICA CAMBIADA A SJF ===");
+                System.out.println("\n=== POLÍTICA CAMBIADA A RR ===");
             }
             
             imprimirEstado();
@@ -103,7 +103,7 @@ public class Main {
         for (CPU cpu : cpus) {
             if (cpu != null) {
                 String estado = (cpu.getProceso() != null) ? 
-                    cpu.getProceso().getName() : "Libre";
+                    cpu.getProceso().getName() : "System";
                 System.out.println("CPU " + cpu.getCPUid() + ": " + estado);
             }
         }
