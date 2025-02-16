@@ -96,9 +96,7 @@ public class Scheduller {
         return ColaListo.isEmpty() ? null : ColaListo.getpFirst().gettInfo();
     }
 
-    //-----------------------------------------
-    // Métodos de ordenamiento para cada política
-    //-----------------------------------------
+    
     private void ordenarFCFS() {
         ordenarPorFCFS();
         // FCFS no necesita ordenamiento (se mantiene el orden de llegada)
@@ -121,9 +119,7 @@ public class Scheduller {
         bubbleSort(new ComparatorHRRN());
     }
 
-    //-----------------------------------------
-    // Implementación de comparadores
-    //-----------------------------------------
+    
     private static class ComparatorSRT implements Comparator<Proceso> {
         @Override
         public int compare(Proceso p1, Proceso p2) {
@@ -156,9 +152,7 @@ public class Scheduller {
     private void ordenarPorFCFS() {
         bubbleSort(new ComparatorFCFS());
     }
-    //-----------------------------------------
-    // Método de ordenamiento genérico
-    //-----------------------------------------
+    
     private void bubbleSort(Comparator<Proceso> comparator) {
         if (ColaListo.getSize() <= 1) return;
 

@@ -45,7 +45,7 @@ public class Proceso {
         this.status = status;
         this.cpu = cpu;
         this.time = time;
-        this. remainingTime = remainingTime;
+        this.remainingTime = remainingTime;
         this.cpubound = cpubound;
         this.iobound = iobound;
         this.MAR = MAR;
@@ -217,7 +217,8 @@ public class Proceso {
         }
         return tiempo;
     }
+    @Override
+    public String toString() {
+        return name + " (ID: " + id + ", T: " + remainingTime + ")";
+    }
 }
-
-
-

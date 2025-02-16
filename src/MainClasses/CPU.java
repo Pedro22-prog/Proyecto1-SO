@@ -114,10 +114,11 @@ public void run() {
             if (this.proceso != null) {
                 boolean isPreemptive = (Main.politicaActual == 2 || Main.politicaActual == 3); // RR o SRT
                 boolean shouldPreempt = false;
+                quantumCount++;
                 
                 // Lógica de expulsión
                 if (Main.politicaActual == 2) { // Round Robin
-                    quantumCount++;
+                    
                     if (quantumCount >= Main.scheduler.getQuantum()) {
                         shouldPreempt = true;
                         quantumCount = 0;
@@ -134,7 +135,12 @@ public void run() {
                 if (shouldPreempt && isPreemptive) {
                     this.proceso.setStatus("Ready");
                     Main.colaListos.agregar(this.proceso);
+                    
                     this.proceso = null;
+                    String estado = (getProceso() != null) ? 
+                    getProceso().getName() : "SO";
+                System.out.println("CPU " + getCPUid() + ": " + estado);
+
                     //Main.gui.updateQueueDisplays();
                 }
             }
@@ -154,16 +160,11 @@ public void run() {
             
             // 3. Ejecutar instrucción
             if (this.proceso != null) {
-                ejecutarInstruccion();
-                checkForInterrupt();
+    ejecutarInstruccion();
+    if (this.proceso != null) {  // Verificar nuevamente después de ejecutar
+        checkForInterrupt();
+    }
                 
-                // Verificar finalización
-                if (this.proceso.getRemainingTime() <= 0) {
-                    this.proceso.setStatus("Exit");
-                    Main.colaTerminados.agregar(this.proceso);
-                    this.proceso = null;
-                    //Colocar actualizar la gui
-                }
             }
             
             Main.semaforo.release();
@@ -195,39 +196,51 @@ public void run() {
 
 
     private void ejecutarInstruccion() {
+    if (proceso != null) { // Verificar que el proceso no sea nulo
         proceso.setPC(proceso.getPC() + 1);
         proceso.setRemainingTime(proceso.getRemainingTime() - 1);
         
-        if (proceso.getRemainingTime() == 0) {
+        if (proceso.getRemainingTime() <= 0) {
             proceso.setStatus("Exit");
             Main.colaTerminados.agregar(proceso);
             this.proceso = null;
         }
     }
-    
+}
 
-
-
-    private void checkForInterrupt() {
-        if (proceso.isIobound() && (proceso.getPC() % proceso.getCiclosParaExcepcion() == 0)) { 
-            proceso.setStatus("Blocked");
-            Main.colaBloqueados.agregar(proceso);
-            new Thread(() -> {
-                try {
-                    for (int i = 0; i < proceso.getExceptionDuration();i++){
-                      Thread.sleep(Main.cicloDuration);
-                    }
-                    
-                    proceso.setStatus("Ready");
-                    Main.colaListos.agregar(proceso);
-                    //Colocar actualizar la gui
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+private void checkForInterrupt() {
+    if (proceso != null && proceso.isIobound() && 
+        (proceso.getPC() % proceso.getCiclosParaExcepcion() == 0)) {
+        
+        // Guardar referencia local
+        Proceso procesoInterrumpido = this.proceso;
+        
+        new Thread(() -> {
+            try {
+                // Esperar duración de la excepción
+                for (int i = 0; i < procesoInterrumpido.getExceptionDuration(); i++) {
+                    Thread.sleep(Main.cicloDuration);
                 }
-            }).start();
-            this.proceso = null;
-        }
+                
+                // Eliminar de bloqueados y agregar a listos
+                Main.semaforo.acquire();
+                Main.colaBloqueados.eliminar(procesoInterrumpido); // ¡Clave!
+                procesoInterrumpido.setStatus("Ready");
+                Main.colaListos.agregar(procesoInterrumpido);
+                Main.semaforo.release();
+                
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        
+        // Limpiar CPU
+        procesoInterrumpido.setStatus("Blocked");
+        Main.colaBloqueados.agregar(procesoInterrumpido);
+        this.proceso = null;
+        String estado = (getProceso() != null) ? 
+                    getProceso().getName() : "SO";
+                System.out.println("CPU " + getCPUid() + ": " + estado);
     }
-
-
+}
 }
