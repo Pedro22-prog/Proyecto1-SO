@@ -208,39 +208,40 @@ public void run() {
     }
 }
 
-private void checkForInterrupt() {
-    if (proceso != null && proceso.isIobound() && 
-        (proceso.getPC() % proceso.getCiclosParaExcepcion() == 0)) {
-        
-        // Guardar referencia local
-        Proceso procesoInterrumpido = this.proceso;
-        
-        new Thread(() -> {
-            try {
-                // Esperar duración de la excepción
-                for (int i = 0; i < procesoInterrumpido.getExceptionDuration(); i++) {
-                    Thread.sleep(Main.cicloDuration);
+    private void checkForInterrupt() {
+        if (proceso != null && proceso.isIobound() && 
+            (proceso.getPC() % proceso.getCiclosParaExcepcion() == 0)) {
+
+            // Guardar referencia local
+            Proceso procesoInterrumpido = this.proceso;
+
+            new Thread(() -> {
+                try {
+                    // Esperar duración de la excepción
+                    for (int i = 0; i < procesoInterrumpido.getExceptionDuration(); i++) {
+                        Thread.sleep(Main.cicloDuration);
+                    }
+
+                    // Eliminar de bloqueados y agregar a listos
+                    Main.semaforo.acquire();
+                    Main.colaBloqueados.eliminar(procesoInterrumpido); // ¡Clave!
+                    procesoInterrumpido.setStatus("Ready");
+                    Main.colaListos.agregar(procesoInterrumpido);
+                    Main.semaforo.release();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                
-                // Eliminar de bloqueados y agregar a listos
-                Main.semaforo.acquire();
-                Main.colaBloqueados.eliminar(procesoInterrumpido); // ¡Clave!
-                procesoInterrumpido.setStatus("Ready");
-                Main.colaListos.agregar(procesoInterrumpido);
-                Main.semaforo.release();
-                
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-        
-        // Limpiar CPU
-        procesoInterrumpido.setStatus("Blocked");
-        Main.colaBloqueados.agregar(procesoInterrumpido);
-        this.proceso = null;
-        String estado = (getProceso() != null) ? 
-                    getProceso().getName() : "SO";
-                System.out.println("CPU " + getCPUid() + ": " + estado);
+            }).start();
+
+            // Limpiar CPU
+            procesoInterrumpido.setStatus("Blocked");
+            Main.colaBloqueados.agregar(procesoInterrumpido);
+            this.proceso = null;
+            String estado = (getProceso() != null) ? 
+                        getProceso().getName() : "SO";
+                    System.out.println("CPU " + getCPUid() + ": " + estado);
+        }
     }
-}
+    
 }

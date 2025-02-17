@@ -129,7 +129,7 @@ public class Home extends javax.swing.JFrame {
                 finishActionPerformed(evt);
             }
         });
-        jPanel4.add(finish, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 760, -1, -1));
+        jPanel4.add(finish, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, -1, -1));
 
         ShowResults.setText("Mostrar");
         ShowResults.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +137,7 @@ public class Home extends javax.swing.JFrame {
                 ShowResultsActionPerformed(evt);
             }
         });
-        jPanel4.add(ShowResults, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 760, -1, -1));
+        jPanel4.add(ShowResults, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, -1, -1));
 
         ViewResults.setColumns(20);
         ViewResults.setRows(5);

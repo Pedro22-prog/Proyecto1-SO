@@ -217,6 +217,7 @@ public class Proceso {
         }
         return tiempo;
     }
+    
     @Override
     public String toString() {
         return name + " (ID: " + id + ", T: " + remainingTime + ")";
