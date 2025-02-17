@@ -20,41 +20,36 @@ public class Main {
     public static Lista<Proceso> colaListos = new Lista<>();
     public static Lista<Proceso> colaBloqueados = new Lista<>();
     public static Lista<Proceso> colaTerminados = new Lista<>();
-    public static CPU cpu1 = new CPU(1, true);
-    public static CPU cpu2 = new CPU(2, true);
-    public static CPU cpu3 = new CPU(3, false); //Empieza inactiva por default
+    public static CPU[] cpus = new CPU[2]; 
     public static int cicloGlobal = 0;
-    public static int politicaActual = 1; // FCFS
+    public static int politicaActual = 1; // Round Robin
     public static int cicloDuration = 3000; // 3 segundos por ciclo
-    public static int cantidadCpus;
     public static Scheduller scheduler = new Scheduller(5, colaListos, colaBloqueados, colaTerminados);
     public static boolean cambioRealizado = false;
 
     public static void main(String[] args) throws InterruptedException {
         crearProcesosPrueba();
-        Home h = new Home();
-        h.setVisible(true);
         
         // Inicializar CPUs
-        cpu1 = new CPU(1, true);
-        cpu2 = new CPU(2, true);
+        cpus[0] = new CPU(1, true);
+        cpus[1] = new CPU(2, true);
         
-//        for (CPU cpu : cpus) {
-//            if (cpu != null) cpu.start();
-//        }
+        for (CPU cpu : cpus) {
+            if (cpu != null) cpu.start();
+        }
 
-//        while (true) {
-////             Cambiar política a SJF en el ciclo 6
-//            if (cicloGlobal == 6 && !cambioRealizado) {
-//                cambiarPolitica(2); // SJF
-//                cambioRealizado = true;
-//                System.out.println("\n=== POLÍTICA CAMBIADA A RR ===");
-//            }
-//            
-//            imprimirEstado();
-//            cicloGlobal++;
-//            Thread.sleep(cicloDuration);
-//        }
+        while (true) {
+//             Cambiar política a SJF en el ciclo 6
+            if (cicloGlobal == 6 && !cambioRealizado) {
+                cambiarPolitica(2); // SJF
+                cambioRealizado = true;
+                System.out.println("\n=== POLÍTICA CAMBIADA A RR ===");
+            }
+            
+            imprimirEstado();
+            cicloGlobal++;
+            Thread.sleep(cicloDuration);
+        }
     }
 
     private static void crearProcesosPrueba() {
@@ -99,20 +94,20 @@ public class Main {
         colaListos.agregar(p);
     }
 
-//    private static void imprimirEstado() {
-//        System.out.println("\n=== Ciclo " + cicloGlobal + " (" + (cicloGlobal * 3) + "s) ===");
-//        System.out.println("Cola de Listos: " + colaListos.recorrer());
-//        System.out.println("Cola Bloqueados: " + colaBloqueados.recorrer());
-//        System.out.println("Cola Terminados: " + colaTerminados.recorrer());
-//        
-//        for (CPU cpu : cpus) {
-//            if (cpu != null) {
-//                String estado = (cpu.getProceso() != null) ? 
-//                    cpu.getProceso().getName() : "System";
-//                System.out.println("CPU " + cpu.getCPUid() + ": " + estado);
-//            }
-//        }
-//    }
+    private static void imprimirEstado() {
+        System.out.println("\n=== Ciclo " + cicloGlobal + " (" + (cicloGlobal * 3) + "s) ===");
+        System.out.println("Cola de Listos: " + colaListos.recorrer());
+        System.out.println("Cola Bloqueados: " + colaBloqueados.recorrer());
+        System.out.println("Cola Terminados: " + colaTerminados.recorrer());
+        
+        for (CPU cpu : cpus) {
+            if (cpu != null) {
+                String estado = (cpu.getProceso() != null) ? 
+                    cpu.getProceso().getName() : "System";
+                System.out.println("CPU " + cpu.getCPUid() + ": " + estado);
+            }
+        }
+    }
     
     public static Scheduller getScheduler() {
         return scheduler;

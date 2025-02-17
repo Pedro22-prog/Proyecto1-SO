@@ -30,11 +30,14 @@ import javax.swing.SwingUtilities;
  * @author pedro
  */
 public class Home extends javax.swing.JFrame {
+    CPU cpu1 = new CPU(1, true);
+    CPU cpu2 = new CPU(1, true);
+    CPU cpu3 = new CPU(1, true);
     public static Semaphore semaforo = new Semaphore(1); // Semáforo binario
     public static int cicloGlobal;
     public static int politicaActual = 1;
     public static int cicloDuration;
-    public static Scheduller scheduler= new Scheduller(5, colaListos,colaBloqueados, colaTerminados);
+    public static Scheduller scheduler = new Scheduller(5, colaListos, colaBloqueados, colaTerminados);
 //    private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 //    private JFreeChart chart;
 //    private ChartPanel chartPanel;
@@ -334,23 +337,21 @@ public class Home extends javax.swing.JFrame {
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
         if (!simulacionActiva) {
             simulacionActiva = true;
-            Main.cantidadCpus = Integer.parseInt(QtyCPU.getSelectedItem().toString());
-        
-            // Iniciar hilos de las CPUs
-            Main.cpu1.start();
-            Main.cpu2.start();
-            if (Main.cantidadCpus == 3) {
-                Main.cpu3.start();
-            }
             iniciarSimulacion();
         }
     }//GEN-LAST:event_btnStopActionPerformed
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        // TODO add your handling code here:
         if (!simulacionActiva) {
             simulacionActiva = true;
-            Main.cantidadCpus = Integer.parseInt(QtyCPU.getSelectedItem().toString());
+//           Main.cantidadCpus = Integer.parseInt(QtyCPU.getSelectedItem().toString());
+
+            // Iniciar hilos de las CPUs
+            cpu1.start();
+            cpu2.start();
+            if (  Integer.parseInt(QtyCPU.getSelectedItem().toString())   == 3) {
+                cpu3.start();
+            }
             iniciarSimulacion();
         }
     }//GEN-LAST:event_btnStartActionPerformed
@@ -363,12 +364,22 @@ public class Home extends javax.swing.JFrame {
     private void SelectAlgorithmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectAlgorithmActionPerformed
         // TODO add your handling code here:
         String politica = (String) SelectAlgorithm.getSelectedItem();
-        switch(politica) {
-            case "FCFS": Main.politicaActual = 1; break;
-            case "Round Robin": Main.politicaActual = 2; break;
-            case "SRT": Main.politicaActual = 3; break;
-            case "SJT": Main.politicaActual = 4; break;
-            case "HRRN": Main.politicaActual = 5; break;
+        switch (politica) {
+            case "FCFS":
+                Main.politicaActual = 1;
+                break;
+            case "Round Robin":
+                Main.politicaActual = 2;
+                break;
+            case "SRT":
+                Main.politicaActual = 3;
+                break;
+            case "SJT":
+                Main.politicaActual = 4;
+                break;
+            case "HRRN":
+                Main.politicaActual = 5;
+                break;
         }
         actualizarPlanificador();
     }//GEN-LAST:event_SelectAlgorithmActionPerformed
@@ -384,38 +395,38 @@ public class Home extends javax.swing.JFrame {
 
     private void btnAgregarProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProcesoActionPerformed
         try {
-        String nombre = jTextField1.getText();
-        String tiempoStr = jTextField2.getText();
-        
-        if (nombre.isEmpty() || tiempoStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nombre y Tiempo son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        int tiempo = Integer.parseInt(tiempoStr);
-        if (tiempo <= 0) {
-            JOptionPane.showMessageDialog(this, "El tiempo debe ser un número positivo", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-         }
-        if (jComboBox1.getSelectedItem().equals("I/OBound")) {
-        // Añadir validación de campos adicionales
-        // Ejemplo: jTextField3 y jTextField4 deben ser > 0
-        }
+            String nombre = jTextField1.getText();
+            String tiempoStr = jTextField2.getText();
+
+            if (nombre.isEmpty() || tiempoStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nombre y Tiempo son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int tiempo = Integer.parseInt(tiempoStr);
+            if (tiempo <= 0) {
+                JOptionPane.showMessageDialog(this, "El tiempo debe ser un número positivo", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (jComboBox1.getSelectedItem().equals("I/OBound")) {
+                // Añadir validación de campos adicionales
+                // Ejemplo: jTextField3 y jTextField4 deben ser > 0
+            }
             Proceso p = new Proceso(
-                Main.colaListos.getSize() + 1,
-                nombre,
-                "Ready",
-                0,
-                tiempo,
-                tiempo,
-                jComboBox1.getSelectedItem().equals("CPUBound"),
-                jComboBox1.getSelectedItem().equals("I/OBound"),
-                0,
-                0,
-                Main.cicloGlobal // Establecer llegada al ciclo actual
-                );
-                Main.colaListos.agregar(p);
-                JOptionPane.showMessageDialog(this, "Proceso agregado!");
+                    Main.colaListos.getSize() + 1,
+                    nombre,
+                    "Ready",
+                    0,
+                    tiempo,
+                    tiempo,
+                    jComboBox1.getSelectedItem().equals("CPUBound"),
+                    jComboBox1.getSelectedItem().equals("I/OBound"),
+                    0,
+                    0,
+                    Main.cicloGlobal // Establecer llegada al ciclo actual
+            );
+            Main.colaListos.agregar(p);
+            JOptionPane.showMessageDialog(this, "Proceso agregado!");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Datos inválidos", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -427,7 +438,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_ShowResultsActionPerformed
 
     private void QtyCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QtyCPUActionPerformed
-        Main.cantidadCpus = Integer.parseInt(QtyCPU.getSelectedItem().toString());
+        //Main.cantidadCpus = Integer.parseInt(QtyCPU.getSelectedItem().toString());
         //Main..setEstado(Main.cantidadCpus == 3);
     }//GEN-LAST:event_QtyCPUActionPerformed
 
@@ -534,7 +545,7 @@ public class Home extends javax.swing.JFrame {
 
     private void iniciarSimulacion() {
         hiloSimulacion = new Thread(() -> {
-        while (simulacionActiva) {
+            while (simulacionActiva) {
                 try {
                     Main.semaforo.acquire();
                     SwingUtilities.invokeLater(() -> {
@@ -552,27 +563,18 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void actualizarInterfaz() {
-        // Actualizar CPUs
-        actualizarCPU(ShowCPU1, Main.cpu1.getProceso());
-        actualizarCPU(ShowCPU2, Main.cpu2.getProceso());
-        // Solo actualizar CPU3 si está activa
-        if (Main.cantidadCpus == 3 && Main.cpu3.isEstado()) {
-            actualizarCPU(ShowCPU3, Main.cpu3.getProceso());
-        } else {
-            ShowCPU3.setText("CPU Inactiva");
-        }
+        actualizarCPU(ShowCPU1, cpu1.getProceso());
+        actualizarCPU(ShowCPU2, cpu2.getProceso());
+//        // Solo actualizar CPU3 si está activa
+//        if (Main.cantidadCpus == 3 && Main.cpu3.isEstado()) {
+//            actualizarCPU(ShowCPU3, Main.cpu3.getProceso());
+//        } else {
+//            ShowCPU3.setText("CPU Inactiva");
+//        }
         // Actualizar colas
         actualizarCola(ShowQueueReady, Main.colaListos);
         actualizarCola(ShowQueueBlock, Main.colaBloqueados);
         actualizarCola(ShowFinishQueue, Main.colaTerminados);
-    
-        // Actualizar gráfico
-//        dataset.addValue(Main.colaListos.getSize(), "Listos", String.valueOf(Main.cicloGlobal));
-//        dataset.addValue(Main.colaBloqueados.getSize(), "Bloqueados", String.valueOf(Main.cicloGlobal));
-//        double utilizacion = (Main.cpu1.getProceso() != null ? 1 : 0) + 
-//        (Main.cpu2.getProceso() != null ? 1 : 0);
-//        //(Main.cantidadCpus == 3 && Main.cpu3.getProceso() != null ? 1 : 0); 
-//        dataset.addValue(utilizacion, "CPUs Activos", String.valueOf(Main.cicloGlobal));
     }
 
     private void actualizarCPU(JTextArea area, Proceso proceso) {
