@@ -565,12 +565,13 @@ public class Home extends javax.swing.JFrame {
     private void actualizarInterfaz() {
         actualizarCPU(ShowCPU1, cpu1.getProceso());
         actualizarCPU(ShowCPU2, cpu2.getProceso());
-//        // Solo actualizar CPU3 si está activa
-//        if (Main.cantidadCpus == 3 && Main.cpu3.isEstado()) {
-//            actualizarCPU(ShowCPU3, Main.cpu3.getProceso());
-//        } else {
-//            ShowCPU3.setText("CPU Inactiva");
-//        }
+        
+        // Solo actualizar CPU3 si está activa
+        if (Integer.parseInt(QtyCPU.getSelectedItem().toString())   == 3) {
+            actualizarCPU(ShowCPU3, cpu3.getProceso());
+        } else {
+            ShowCPU3.setText("CPU Inactiva");
+        }
         // Actualizar colas
         actualizarCola(ShowQueueReady, Main.colaListos);
         actualizarCola(ShowQueueBlock, Main.colaBloqueados);
