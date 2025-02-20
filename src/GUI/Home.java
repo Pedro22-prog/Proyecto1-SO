@@ -79,6 +79,16 @@ public class Home extends javax.swing.JFrame {
         ViewResults = new javax.swing.JTextArea();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        CPUsage = new javax.swing.JTextArea();
+        jLabel24 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jLabel25 = new javax.swing.JLabel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -158,13 +168,43 @@ public class Home extends javax.swing.JFrame {
         ViewResults.setRows(5);
         jScrollPane8.setViewportView(ViewResults);
 
-        jPanel4.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 670, 530));
+        jPanel4.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 300, 210));
 
         jLabel15.setText("SOmulation");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
 
         jLabel16.setText("Resultados Obtenidos de la simulación.");
         jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
+
+        jLabel22.setText("Resumen de resultados");
+        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, -1));
+
+        jLabel23.setText("Uso de cpus");
+        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
+
+        CPUsage.setColumns(20);
+        CPUsage.setRows(5);
+        jScrollPane9.setViewportView(CPUsage);
+
+        jPanel4.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 270, 210));
+
+        jLabel24.setText("Estadisticas por politica de planificación");
+        jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 450, -1, -1));
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane10.setViewportView(jTextArea2);
+
+        jPanel4.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 490, 290, 220));
+
+        jLabel25.setText("Porcentaje por tipo de procesos");
+        jPanel4.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 460, -1, -1));
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setRows(5);
+        jScrollPane11.setViewportView(jTextArea3);
+
+        jPanel4.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 490, 270, 220));
 
         jTabbedPane1.addTab("Resultados", jPanel4);
 
@@ -186,7 +226,7 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setText("El patio de Juego de los Grandes");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPUBound", "I/OBound" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "I/OBound", "CPUBound", " " }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -567,6 +607,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea CPUsage;
     private javax.swing.JButton Close;
     private javax.swing.JComboBox<String> QtyCPU;
     private javax.swing.JComboBox<String> SelectAlgorithm;
@@ -602,6 +643,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -613,6 +658,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -620,9 +667,12 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

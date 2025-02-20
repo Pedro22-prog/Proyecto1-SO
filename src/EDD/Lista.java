@@ -129,7 +129,7 @@ public class Lista<T> implements Iterable<T> {
             public boolean hasNext() {
                 return current != null;
             }
-
+            
             @Override
             public T next() {
                 T data = current.gettInfo();

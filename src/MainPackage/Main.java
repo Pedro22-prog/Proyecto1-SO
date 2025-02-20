@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
@@ -28,6 +28,8 @@ public class Main {
     public static boolean cambioRealizado = false;
 
     public static void main(String[] args) throws InterruptedException {
+        Home h = new Home();
+        h.setVisible(true);
         crearProcesosPrueba();
         
         // Inicializar CPUs
