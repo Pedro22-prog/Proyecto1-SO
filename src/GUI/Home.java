@@ -116,6 +116,8 @@ public class Home extends javax.swing.JFrame {
         ShowFinishQueue = new javax.swing.JTextArea();
         jLabel20 = new javax.swing.JLabel();
         QtyCPU = new javax.swing.JComboBox<>();
+        ciclo = new javax.swing.JSpinner();
+        actualizarciclo = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -311,6 +313,15 @@ public class Home extends javax.swing.JFrame {
 
         QtyCPU.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3" }));
         jPanel3.add(QtyCPU, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 50, -1));
+        jPanel3.add(ciclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, -1, -1));
+
+        actualizarciclo.setText("Actualizar ciclo");
+        actualizarciclo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarcicloActionPerformed(evt);
+            }
+        });
+        jPanel3.add(actualizarciclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
         jTabbedPane1.addTab("Simulacion", jPanel3);
 
@@ -462,6 +473,10 @@ public class Home extends javax.swing.JFrame {
         
     }//GEN-LAST:event_ShowResultsActionPerformed
 
+    private void actualizarcicloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarcicloActionPerformed
+        Main.cicloDuration=(Integer)ciclo.getValue()*1000;    // TODO add your handling code here:
+    }//GEN-LAST:event_actualizarcicloActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -509,9 +524,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextArea ShowQueueReady;
     private javax.swing.JButton ShowResults;
     private javax.swing.JTextArea ViewResults;
+    private javax.swing.JButton actualizarciclo;
     private javax.swing.JButton btnAgregarProceso;
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStop;
+    private javax.swing.JSpinner ciclo;
     private javax.swing.JButton exit;
     private javax.swing.JButton finish;
     private javax.swing.JComboBox<String> jComboBox1;

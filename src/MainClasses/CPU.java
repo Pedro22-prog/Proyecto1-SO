@@ -20,6 +20,7 @@ public class CPU extends Thread {
     private Semaphore s;
     private Scheduller scheduler;
     private Lista listaInterrupts;
+    private Proceso SO = new Proceso(40, "SO", "running", this.id, 3, 3, true, false, 0, 1, Main.cicloGlobal);
 
     public CPU(int id, boolean estado) {
         this.s = s;
@@ -132,11 +133,11 @@ public void run() {
                 }
                 
                 // Ejecutar expulsión
-                if (shouldPreempt && isPreemptive) {
+                if (shouldPreempt && isPreemptive && this.proceso.getName()!="SO") {
                     this.proceso.setStatus("Ready");
                     Main.colaListos.agregar(this.proceso);
                     
-                    this.proceso = new Proceso(40, "SO", "running", this.id, 3, 3, true, false, 0, 1, Main.cicloGlobal);
+                    this.proceso = SO;
                     String estado = (getProceso() != null) ? 
                     getProceso().getName() : "SO";
                 System.out.println("CPU " + getCPUid() + ": " + estado);
