@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package MainClasses;
-
+import GUI.Home;
 import java.util.concurrent.Semaphore;
 import EDD.Lista; 
 import EDD.Nodo;
@@ -136,10 +136,11 @@ public void run() {
                     this.proceso.setStatus("Ready");
                     Main.colaListos.agregar(this.proceso);
                     
-                    this.proceso = null;
+                    this.proceso = new Proceso(40, "SO", "running", this.id, 3, 3, true, false, 0, 1, Main.cicloGlobal);
                     String estado = (getProceso() != null) ? 
                     getProceso().getName() : "SO";
                 System.out.println("CPU " + getCPUid() + ": " + estado);
+//                sleep(3*Main.cicloDuration);
 
                     //Main.gui.updateQueueDisplays();
                 }
@@ -198,12 +199,19 @@ public void run() {
     private void ejecutarInstruccion() {
     if (proceso != null) { // Verificar que el proceso no sea nulo
         proceso.setPC(proceso.getPC() + 1);
+        proceso.setMAR(proceso.getMAR() + 1);
         proceso.setRemainingTime(proceso.getRemainingTime() - 1);
         
         if (proceso.getRemainingTime() <= 0) {
-            proceso.setStatus("Exit");
+            if (proceso.getName()=="SO"){
+                this.proceso=null;
+            }
+            if (this.proceso!=null){
+                proceso.setStatus("Exit");
             Main.colaTerminados.agregar(proceso);
             this.proceso = null;
+            }
+            
         }
     }
 }

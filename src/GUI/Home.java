@@ -582,7 +582,7 @@ public class Home extends javax.swing.JFrame {
         hiloSimulacion.start();
     }
 
-    private void actualizarInterfaz() {
+    public void actualizarInterfaz() {
         actualizarCPU(ShowCPU1, cpu1.getProceso());
         actualizarCPU(ShowCPU2, cpu2.getProceso());
         
@@ -590,7 +590,7 @@ public class Home extends javax.swing.JFrame {
         if (Integer.parseInt(QtyCPU.getSelectedItem().toString())   == 3) {
             actualizarCPU(ShowCPU3, cpu3.getProceso());
         } else {
-            ShowCPU3.setText("CPU Inactiva");
+            ShowCPU3.setText("System");
         }
         // Actualizar colas
         actualizarCola(ShowQueueReady, Main.colaListos);
@@ -608,7 +608,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void actualizarCPU(JTextArea area, Proceso proceso) {
-        if (proceso != null) {
+        if (proceso != null && proceso.getName() != "SO") {
             area.setText(
                 "ID: " + proceso.getId() + "\n" +
                 "Nombre: " + proceso.getName() + "\n" +
@@ -616,8 +616,10 @@ public class Home extends javax.swing.JFrame {
                 "MAR: " + proceso.getMAR() + "\n"+
                 "T. Restante: " + proceso.getRemainingTime()
             );
-        } else {
-            area.setText("CPU Inactiva");
+        } else if (proceso!=null && proceso.getName()=="SO"){
+            area.setText("SO");
+        }else{
+            area.setText("System");
         }
     }
     
