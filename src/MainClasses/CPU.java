@@ -246,7 +246,7 @@ public void run() {
             // Limpiar CPU
             procesoInterrumpido.setStatus("Blocked");
             Main.colaBloqueados.agregar(procesoInterrumpido);
-            this.proceso = null;
+            this.proceso = SO;
             String estado = (getProceso() != null) ? 
                         getProceso().getName() : "SO";
                     System.out.println("CPU " + getCPUid() + ": " + estado);

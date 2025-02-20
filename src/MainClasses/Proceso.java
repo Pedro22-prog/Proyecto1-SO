@@ -48,8 +48,8 @@ public class Proceso {
         this.remainingTime = remainingTime;
         this.cpubound = cpubound;
         this.iobound = iobound;
-        this.MAR = MAR;
-        this.PC = PC;
+        this.MAR = 0;
+        this.PC = 1;
         this.Llegada = Llegada;
     }
     
@@ -220,6 +220,10 @@ public class Proceso {
     
     @Override
     public String toString() {
-        return name + " (ID: " + id + ", T: " + remainingTime + ")";
+        return "ID: " + this.id + "\n" +
+               " | STATUS: " + this.status + "\n" +
+               " | Nombre: " + this.name + "\n" +
+               " | PC: " + this.PC + "\n" +
+               " | MAR: " + this.MAR;
     }
 }

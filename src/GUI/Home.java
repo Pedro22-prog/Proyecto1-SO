@@ -638,11 +638,12 @@ public class Home extends javax.swing.JFrame {
     private void actualizarCPU(JTextArea area, Proceso proceso) {
         if (proceso != null && proceso.getName() != "SO") {
             area.setText(
-                "ID: " + proceso.getId() + "\n" +
-                "Nombre: " + proceso.getName() + "\n" +
-                "PC: " + proceso.getPC() + "\n" + 
-                "MAR: " + proceso.getMAR() + "\n"+
-                "T. Restante: " + proceso.getRemainingTime()
+//                "ID: " + proceso.getId() + "\n" +
+//                "Nombre: " + proceso.getName() + "\n" +
+//                "PC: " + proceso.getPC() + "\n" + 
+//                "MAR: " + proceso.getMAR() + "\n"+
+//                "T. Restante: " + proceso.getRemainingTime()
+                  proceso.toString()
             );
         } else if (proceso!=null && proceso.getName()=="SO"){
             area.setText("SO");
