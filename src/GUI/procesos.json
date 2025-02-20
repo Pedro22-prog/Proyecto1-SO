@@ -1,0 +1,16 @@
+{
+  "cicloDuration": 3000,
+  "numCPUs": 3,
+  "procesos": {
+    "pFirst": {
+      "tInfo": {
+        "nombre": "p1",
+        "tipo": "I/OBound",
+        "instrucciones": 3,
+        "ciclosExcepcion": 1,
+        "duracionExcepcion": 2
+      }
+    },
+    "id": 0
+  }
+}

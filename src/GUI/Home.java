@@ -24,6 +24,12 @@ import java.io.File;
 import java.util.concurrent.Semaphore;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.*;
+import MainPackage.SimulationConfig;
+import MainPackage.ProcesoConfig;
+
 
 /**
  *
@@ -120,6 +126,8 @@ public class Home extends javax.swing.JFrame {
         actualizarciclo = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -331,6 +339,22 @@ public class Home extends javax.swing.JFrame {
         jLabel21.setText("0");
         jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 210, -1, -1));
 
+        jButton1.setText("Guardar config");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 270, -1, -1));
+
+        jButton2.setText("Cargar config");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, -1, -1));
+
         jTabbedPane1.addTab("Simulacion", jPanel3);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 840));
@@ -485,6 +509,28 @@ public class Home extends javax.swing.JFrame {
         Main.cicloDuration=(Integer)ciclo.getValue()*1000;    // TODO add your handling code here:
     }//GEN-LAST:event_actualizarcicloActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Cargar configuración");
+    int userSelection = fileChooser.showOpenDialog(this);
+    
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToLoad = fileChooser.getSelectedFile();
+        cargarConfiguracion(fileToLoad);
+    }                // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Guardar configuración");
+    int userSelection = fileChooser.showSaveDialog(this);
+    
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        guardarConfiguracion(fileToSave);
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -539,6 +585,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JSpinner ciclo;
     private javax.swing.JButton exit;
     private javax.swing.JButton finish;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -589,7 +637,70 @@ public class Home extends javax.swing.JFrame {
         Main.colaTerminados
     );
     }
+    private void guardarConfiguracion(File archivo) {
+    try (Writer writer = new FileWriter(archivo)) {
+        SimulationConfig config = new SimulationConfig();
+        config.setCicloDuration(Main.cicloDuration);
+        config.setNumCPUs(Integer.parseInt(QtyCPU.getSelectedItem().toString()));
+        
+        Lista<ProcesoConfig> procesosConfig = new Lista<>();
+        for (Proceso p : Main.colaListos) {
+            ProcesoConfig pc = new ProcesoConfig();
+            pc.setNombre(p.getName());
+            pc.setTipo(p.isIobound() ? "I/OBound" : "CPUBound");
+            pc.setInstrucciones(p.getTime());
+            pc.setCiclosExcepcion(p.getCiclosParaExcepcion());
+            pc.setDuracionExcepcion(p.getExceptionDuration());
+            procesosConfig.agregar(pc);
+        }
+        config.setProcesos(procesosConfig);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson.toJson(config, writer);
+        JOptionPane.showMessageDialog(this, "Configuración guardada!");
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage());
+    }
+}
 
+private void cargarConfiguracion(File archivo) {
+    try (Reader reader = new FileReader(archivo)) {
+        Gson gson = new Gson();
+        SimulationConfig config = gson.fromJson(reader, SimulationConfig.class);
+        
+        // Aplicar configuración
+        Main.cicloDuration = config.getCicloDuration();
+        QtyCPU.setSelectedItem(String.valueOf(config.getNumCPUs()));
+        ciclo.setValue(Main.cicloDuration / 1000);
+        
+        // Cargar procesos
+        Main.colaListos.setpFirst(null);
+        for (ProcesoConfig pc : config.getProcesos()) { // Iteramos directamente sobre la Lista
+            Proceso p = new Proceso(
+                Main.colaListos.getSize() + 1,
+                pc.getNombre(),
+                "Ready",
+                0,
+                pc.getInstrucciones(),
+                pc.getInstrucciones(),
+                pc.getTipo().equals("CPUBound"),
+                pc.getTipo().equals("I/OBound"),
+                0,
+                0,
+                Main.cicloGlobal
+            );
+            if (p.isIobound()) {
+                p.setCiclosParaExcepcion(pc.getCiclosExcepcion());
+                p.setExceptionDuration(pc.getDuracionExcepcion());
+            }
+            Main.colaListos.agregar(p);
+        }
+        JOptionPane.showMessageDialog(this, "Configuración cargada!");
+        actualizarInterfaz();
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar: " + e.getMessage());
+    }
+}
     private void iniciarSimulacion() {
         hiloSimulacion = new Thread(() -> {
             while (simulacionActiva) {

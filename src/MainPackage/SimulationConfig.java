@@ -14,7 +14,27 @@ import java.io.IOException;
  *
  * @author pedro
  */
-public class Lector {
+
+
+
+public class SimulationConfig {
+    private int cicloDuration;
+    private int numCPUs;
+    private Lista<ProcesoConfig> procesos;
+
+    // Getters y Setters
+    public int getCicloDuration() { return cicloDuration; }
+    public void setCicloDuration(int cicloDuration) { this.cicloDuration = cicloDuration; }
+    
+    public int getNumCPUs() { return numCPUs; }
+    public void setNumCPUs(int numCPUs) { this.numCPUs = numCPUs; }
+    
+    public Lista<ProcesoConfig> getProcesos() { return procesos; }
+    public void setProcesos(Lista<ProcesoConfig> procesos) { this.procesos = procesos; }
+}
+
+
+//public class Lector {
 //    public static void cargarCSV(String ruta, Lista<Proceso> colaListos) {
 //        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
 //            String linea;
@@ -84,4 +104,4 @@ public class Lector {
 //            System.err.println("Error al guardar CSV: " + e.getMessage());
 //        }
 //    }
-}
+//}
