@@ -118,6 +118,8 @@ public class Home extends javax.swing.JFrame {
         QtyCPU = new javax.swing.JComboBox<>();
         ciclo = new javax.swing.JSpinner();
         actualizarciclo = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -322,6 +324,12 @@ public class Home extends javax.swing.JFrame {
             }
         });
         jPanel3.add(actualizarciclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
+
+        jLabel17.setText("Ciclo global:");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 180, -1, -1));
+
+        jLabel21.setText("0");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 210, -1, -1));
 
         jTabbedPane1.addTab("Simulacion", jPanel3);
 
@@ -540,10 +548,12 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -600,6 +610,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     public void actualizarInterfaz() {
+        jLabel21.setText(String.valueOf(Main.cicloGlobal));
         actualizarCPU(ShowCPU1, cpu1.getProceso());
         actualizarCPU(ShowCPU2, cpu2.getProceso());
         

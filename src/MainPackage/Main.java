@@ -22,7 +22,7 @@ public class Main {
     public static Lista<Proceso> colaTerminados = new Lista<>();
     public static CPU[] cpus = new CPU[2]; 
     public static int cicloGlobal = 0;
-    public static int politicaActual = 1; // Round Robin
+    public static int politicaActual = 1;
     public static int cicloDuration = 3000; // 3 segundos por ciclo
     public static Scheduller scheduler = new Scheduller(5, colaListos, colaBloqueados, colaTerminados);
     public static boolean cambioRealizado = false;
