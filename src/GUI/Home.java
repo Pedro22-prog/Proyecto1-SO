@@ -85,8 +85,6 @@ public class Home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         btnAgregarProceso = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
-        QtyCPU = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -116,6 +114,8 @@ public class Home extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         ShowFinishQueue = new javax.swing.JTextArea();
+        jLabel20 = new javax.swing.JLabel();
+        QtyCPU = new javax.swing.JComboBox<>();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -202,17 +202,6 @@ public class Home extends javax.swing.JFrame {
         });
         jPanel2.add(btnAgregarProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, -1, -1));
 
-        jLabel17.setText("Cantidad CPU");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, -1, -1));
-
-        QtyCPU.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3" }));
-        QtyCPU.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                QtyCPUActionPerformed(evt);
-            }
-        });
-        jPanel2.add(QtyCPU, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, -1, -1));
-
         jLabel18.setText("Ciclo para excepcion: ");
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, -1, -1));
         jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 110, 190, -1));
@@ -229,7 +218,7 @@ public class Home extends javax.swing.JFrame {
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         jLabel5.setText("Tipo de Politiva de Planificación:");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 190, -1));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 190, -1));
 
         SelectAlgorithm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "Round Robin", "SRT", "SPN", "HRRN" }));
         SelectAlgorithm.addActionListener(new java.awt.event.ActionListener() {
@@ -237,7 +226,7 @@ public class Home extends javax.swing.JFrame {
                 SelectAlgorithmActionPerformed(evt);
             }
         });
-        jPanel3.add(SelectAlgorithm, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
+        jPanel3.add(SelectAlgorithm, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
         Close.setText("Exit");
         Close.addActionListener(new java.awt.event.ActionListener() {
@@ -317,6 +306,12 @@ public class Home extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 540, 230, 190));
 
+        jLabel20.setText("Cantidad de CPUS: ");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
+        QtyCPU.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3" }));
+        jPanel3.add(QtyCPU, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 50, -1));
+
         jTabbedPane1.addTab("Simulacion", jPanel3);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 840));
@@ -335,9 +330,10 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseActionPerformed
 
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
-        if (!simulacionActiva) {
-            simulacionActiva = true;
-            iniciarSimulacion();
+        simulacionActiva = false;
+        detenerCPUs(); // Método para detener CPUs
+        if (hiloSimulacion != null) {
+            hiloSimulacion.interrupt();
         }
     }//GEN-LAST:event_btnStopActionPerformed
 
@@ -387,44 +383,68 @@ public class Home extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         boolean esIO = jComboBox1.getSelectedItem().equals("I/OBound");
-        jLabel4.setVisible(esIO);
-        //jTextField3.setVisible(esIO);
-        jLabel5.setVisible(esIO);
-        //jTextField4.setVisible(esIO);
+        jTextField3.setEnabled(esIO);
+        jTextField4.setEnabled(esIO);
+        jLabel18.setEnabled(esIO);
+        jLabel19.setEnabled(esIO);
+        if (!esIO) {
+            jTextField3.setText("");
+            jTextField4.setText("");
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void btnAgregarProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProcesoActionPerformed
         try {
             String nombre = jTextField1.getText();
             String tiempoStr = jTextField2.getText();
+            boolean esIO = jComboBox1.getSelectedItem().equals("I/OBound");
+            String ciclosExcepcionStr = jTextField3.getText();
+            String duracionExcepcionStr = jTextField4.getText();
 
+            // Validar campos obligatorios
             if (nombre.isEmpty() || tiempoStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nombre y Tiempo son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+            // Validar campos de I/O Bound
+            if (esIO) {
+                if (ciclosExcepcionStr.isEmpty() || duracionExcepcionStr.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Ciclos y Duración son obligatorios para I/O Bound", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            int ciclosExcepcion = Integer.parseInt(ciclosExcepcionStr);
+            int duracionExcepcion = Integer.parseInt(duracionExcepcionStr);
+            if (ciclosExcepcion <= 0 || duracionExcepcion <= 0) {
+                JOptionPane.showMessageDialog(this, "Ciclos y Duración deben ser positivos", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
 
             int tiempo = Integer.parseInt(tiempoStr);
             if (tiempo <= 0) {
                 JOptionPane.showMessageDialog(this, "El tiempo debe ser un número positivo", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (jComboBox1.getSelectedItem().equals("I/OBound")) {
-                // Añadir validación de campos adicionales
-                // Ejemplo: jTextField3 y jTextField4 deben ser > 0
-            }
+
             Proceso p = new Proceso(
-                    Main.colaListos.getSize() + 1,
-                    nombre,
-                    "Ready",
-                    0,
-                    tiempo,
-                    tiempo,
-                    jComboBox1.getSelectedItem().equals("CPUBound"),
-                    jComboBox1.getSelectedItem().equals("I/OBound"),
-                    0,
-                    0,
-                    Main.cicloGlobal // Establecer llegada al ciclo actual
+                Main.colaListos.getSize() + 1,
+                nombre,
+                "Ready",
+                0,
+                tiempo,
+                tiempo,
+                !esIO,
+                esIO,
+                0,
+                0,
+                Main.cicloGlobal
             );
+        
+            if (esIO) {
+                p.setCiclosParaExcepcion(Integer.parseInt(ciclosExcepcionStr));
+                p.setExceptionDuration(Integer.parseInt(duracionExcepcionStr));
+            }
             Main.colaListos.agregar(p);
             JOptionPane.showMessageDialog(this, "Proceso agregado!");
         } catch (NumberFormatException e) {
@@ -434,13 +454,13 @@ public class Home extends javax.swing.JFrame {
 
     private void ShowResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowResultsActionPerformed
         // TODO add your handling code here:
+        StringBuilder resultados = new StringBuilder();
+        resultados.append("Procesos Terminados: ").append(Main.colaTerminados.getSize()).append("\n");
+        resultados.append("Ciclos Totales: ").append(Main.cicloGlobal).append("\n");
+        resultados.append("Utilización de CPUs: ").append(calcularUtilizacionCPUs()).append("%\n");
+        ViewResults.setText(resultados.toString());
         
     }//GEN-LAST:event_ShowResultsActionPerformed
-
-    private void QtyCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QtyCPUActionPerformed
-        //Main.cantidadCpus = Integer.parseInt(QtyCPU.getSelectedItem().toString());
-        //Main..setEstado(Main.cantidadCpus == 3);
-    }//GEN-LAST:event_QtyCPUActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,10 +523,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -577,18 +597,37 @@ public class Home extends javax.swing.JFrame {
         actualizarCola(ShowQueueBlock, Main.colaBloqueados);
         actualizarCola(ShowFinishQueue, Main.colaTerminados);
     }
+    
+    private void detenerCPUs() {
+        cpu1.interrupt();
+        cpu2.interrupt();
+        if (Integer.parseInt(QtyCPU.getSelectedItem().toString()) == 3) {
+            cpu3.interrupt();
+        }
+        SwingUtilities.invokeLater(() -> actualizarInterfaz());
+    }
 
     private void actualizarCPU(JTextArea area, Proceso proceso) {
         if (proceso != null) {
             area.setText(
                 "ID: " + proceso.getId() + "\n" +
                 "Nombre: " + proceso.getName() + "\n" +
-                "PC: " + proceso.getPC() + "\n" +
+                "PC: " + proceso.getPC() + "\n" + 
+                "MAR: " + proceso.getMAR() + "\n"+
                 "T. Restante: " + proceso.getRemainingTime()
             );
         } else {
             area.setText("CPU Inactiva");
         }
+    }
+    
+    private double calcularUtilizacionCPUs() {
+        int activas = 0;
+        if (cpu1.getProceso() != null) activas++;
+        if (cpu2.getProceso() != null) activas++;
+        if (Integer.parseInt(QtyCPU.getSelectedItem().toString()) == 3 && cpu3.getProceso() != null) activas++;
+        int totalCPUs = Integer.parseInt(QtyCPU.getSelectedItem().toString());
+        return (activas * 100.0) / totalCPUs;
     }
 
     private void actualizarCola(JTextArea area, Lista<Proceso> cola) {
