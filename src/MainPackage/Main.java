@@ -28,30 +28,39 @@ public class Main {
     public static boolean cambioRealizado = false;
 
     public static void main(String[] args) throws InterruptedException {
+
         Home h = new Home();
         h.setVisible(true);
         crearProcesosPrueba();
         
+
+//        crearProcesosPrueba();
+        System.out.println(colaListos.recorrer());
+        scheduler.ejecutarPlanificacion(politicaActual);
+        System.out.println(colaListos.recorrer());
+
         // Inicializar CPUs
         cpus[0] = new CPU(1, true);
         cpus[1] = new CPU(2, true);
         
-        for (CPU cpu : cpus) {
-            if (cpu != null) cpu.start();
-        }
+//        for (CPU cpu : cpus) {
+//            if (cpu != null) cpu.start();
+//        }
 
-        while (true) {
-//             Cambiar política a SJF en el ciclo 6
-            if (cicloGlobal == 6 && !cambioRealizado) {
-                cambiarPolitica(2); // SJF
-                cambioRealizado = true;
-                System.out.println("\n=== POLÍTICA CAMBIADA A RR ===");
-            }
-            
-            imprimirEstado();
-            cicloGlobal++;
-            Thread.sleep(cicloDuration);
-        }
+//        while (true) {
+//
+//
+////             Cambiar política a SJF en el ciclo 6
+////            if (cicloGlobal == 6 && !cambioRealizado) {
+////                cambiarPolitica(2); // SJF
+////                cambioRealizado = true;
+////                System.out.println("\n=== POLÍTICA CAMBIADA A RR ===");
+////            }
+////            
+////            imprimirEstado();
+////            cicloGlobal++;
+////            Thread.sleep(cicloDuration);
+//        }
     }
 
     private static void crearProcesosPrueba() {

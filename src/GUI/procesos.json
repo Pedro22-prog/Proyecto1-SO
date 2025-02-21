@@ -1,14 +1,41 @@
 {
-  "cicloDuration": 3000,
-  "numCPUs": 3,
+  "cicloDuration": 2000,
+  "numCPUs": 2,
   "procesos": {
     "pFirst": {
       "tInfo": {
         "nombre": "p1",
         "tipo": "I/OBound",
-        "instrucciones": 3,
-        "ciclosExcepcion": 1,
-        "duracionExcepcion": 2
+        "instrucciones": 15,
+        "ciclosExcepcion": 4,
+        "duracionExcepcion": 6
+      },
+      "pNext": {
+        "tInfo": {
+          "nombre": "p2",
+          "tipo": "CPUBound",
+          "instrucciones": 10,
+          "ciclosExcepcion": 0,
+          "duracionExcepcion": 0
+        },
+        "pNext": {
+          "tInfo": {
+            "nombre": "p3",
+            "tipo": "CPUBound",
+            "instrucciones": 11,
+            "ciclosExcepcion": 0,
+            "duracionExcepcion": 0
+          },
+          "pNext": {
+            "tInfo": {
+              "nombre": "p4",
+              "tipo": "I/OBound",
+              "instrucciones": 6,
+              "ciclosExcepcion": 7,
+              "duracionExcepcion": 3
+            }
+          }
+        }
       }
     },
     "id": 0

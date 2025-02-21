@@ -138,6 +138,7 @@ public class Home extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -395,6 +396,14 @@ public class Home extends javax.swing.JFrame {
         });
         jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, -1, -1));
 
+        jButton3.setText("obtenerplanificacion");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, -1));
+
         jTabbedPane1.addTab("Simulacion", jPanel3);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 840));
@@ -446,21 +455,22 @@ public class Home extends javax.swing.JFrame {
         switch (politica) {
             case "FCFS":
                 Main.politicaActual = 1;
-                break;
+                
             case "Round Robin":
                 Main.politicaActual = 2;
-                break;
+                
             case "SRT":
                 Main.politicaActual = 3;
-                break;
-            case "SJT":
+                
+            case "SPN":
                 Main.politicaActual = 4;
-                break;
+                
             case "HRRN":
                 Main.politicaActual = 5;
-                break;
+                
         }
         actualizarPlanificador();
+        
     }//GEN-LAST:event_SelectAlgorithmActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -571,6 +581,30 @@ public class Home extends javax.swing.JFrame {
     }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String politica = (String) SelectAlgorithm.getSelectedItem();
+        switch (politica) {
+            case "FCFS":
+                Main.politicaActual = 1;
+            break;    
+            case "Round Robin":
+                Main.politicaActual = 2;
+            break;    
+            case "SRT":
+                Main.politicaActual = 3;
+            break;    
+            case "SPN":
+                Main.politicaActual = 4;
+            break;    
+            case "HRRN":
+                Main.politicaActual = 5;
+            break;
+            
+        }
+        
+        actualizarPlanificador();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -628,6 +662,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton finish;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -680,12 +715,24 @@ public class Home extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void actualizarPlanificador() {
-        Main.scheduler = new Scheduller(
-        (Main.politicaActual == 1) ? 5 : 0, 
-        Main.colaListos, 
-        Main.colaBloqueados, 
-        Main.colaTerminados
-    );
+
+//        Main.scheduler = new Scheduller(
+//        (Main.politicaActual == 1) ? 5 : 0, 
+//        Main.colaListos, 
+//        Main.colaBloqueados, 
+//        Main.colaTerminados
+//    );
+
+//        Main.scheduler = new Scheduller(
+//        (Main.politicaActual == 2) ? 5 : 0, 
+//        Main.colaListos, 
+//        Main.colaBloqueados, 
+//        Main.colaTerminados
+//    );
+       Main.scheduler.ejecutarPlanificacion(Main.politicaActual);
+    actualizarCola(ShowQueueReady, Main.colaListos);
+    actualizarInterfaz(); // <-- Añadir esta línea
+
     }
     private void guardarConfiguracion(File archivo) {
     try (Writer writer = new FileWriter(archivo)) {

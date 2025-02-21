@@ -20,7 +20,7 @@ public class CPU extends Thread {
     private Semaphore s;
     private Scheduller scheduler;
     private Lista listaInterrupts;
-    private Proceso SO = new Proceso(40, "SO", "running", this.id, 3, 3, true, false, 0, 1, Main.cicloGlobal);
+    private Proceso SO = new Proceso(40, "SO", "running", this.id, 3, 3, true, false, 0, 0, Main.cicloGlobal);
 
     public CPU(int id, boolean estado) {
         this.s = s;

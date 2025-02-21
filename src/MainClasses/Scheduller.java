@@ -93,6 +93,7 @@ public class Scheduller {
             case 5 -> ordenarHRRN();
             default -> throw new IllegalArgumentException("Política inválida");
         }
+        Main.colaListos=ColaListo;
         return ColaListo.isEmpty() ? null : ColaListo.getpFirst().gettInfo();
     }
 
