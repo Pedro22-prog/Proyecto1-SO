@@ -13,11 +13,14 @@ import MainPackage.Main;
 import static MainPackage.Main.colaBloqueados;
 import static MainPackage.Main.colaListos;
 import static MainPackage.Main.colaTerminados;
-//import java.util.concurrent.Semaphore;
-//import org.jfree.chart.ChartFactory;
-//import org.jfree.chart.ChartPanel;
-//import org.jfree.chart.JFreeChart;
-//import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.plot.PlotOrientation;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import java.io.File;
@@ -38,9 +41,11 @@ public class Home extends javax.swing.JFrame {
     public static int politicaActual = 1;
     public static int cicloDuration;
     public static Scheduller scheduler = new Scheduller(5, colaListos, colaBloqueados, colaTerminados);
-//    private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//    private JFreeChart chart;
-//    private ChartPanel chartPanel;
+    private DefaultCategoryDataset cpuUsageDataset = new DefaultCategoryDataset();
+    private DefaultPieDataset processTypeDataset = new DefaultPieDataset();
+    private DefaultCategoryDataset policyDataset = new DefaultCategoryDataset();
+    private JFreeChart cpuUsageChart, processTypeChart, policyChart;
+    private ChartPanel cpuUsagePanel, processTypePanel, policyPanel;
     private boolean simulacionActiva = false;
     private Thread hiloSimulacion;
 
@@ -51,6 +56,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         QtyCPU.setSelectedItem("2");
+        crearGraficosEstadisticos();
     }
 
     /**
@@ -73,6 +79,16 @@ public class Home extends javax.swing.JFrame {
         ViewResults = new javax.swing.JTextArea();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        CPUsage = new javax.swing.JTextArea();
+        jLabel22 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        Processtadistics = new javax.swing.JTextArea();
+        jLabel23 = new javax.swing.JLabel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        Planificaction = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -146,13 +162,43 @@ public class Home extends javax.swing.JFrame {
         ViewResults.setRows(5);
         jScrollPane8.setViewportView(ViewResults);
 
-        jPanel4.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 670, 530));
+        jPanel4.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 360, 240));
 
         jLabel15.setText("SOmulation");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
 
         jLabel16.setText("Resultados Obtenidos de la simulación.");
         jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
+
+        jLabel17.setText("Resumen de la simulación");
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
+
+        jLabel21.setText("Estadisticas de CPU");
+        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
+
+        CPUsage.setColumns(20);
+        CPUsage.setRows(5);
+        jScrollPane9.setViewportView(CPUsage);
+
+        jPanel4.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 310, 240));
+
+        jLabel22.setText("Cantidad de Procesos");
+        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, -1, -1));
+
+        Processtadistics.setColumns(20);
+        Processtadistics.setRows(5);
+        jScrollPane10.setViewportView(Processtadistics);
+
+        jPanel4.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 350, 240));
+
+        jLabel23.setText("Estadisticas por politica de planificación");
+        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, -1, -1));
+
+        Planificaction.setColumns(20);
+        Planificaction.setRows(5);
+        jScrollPane11.setViewportView(Planificaction);
+
+        jPanel4.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 330, 240));
 
         jTabbedPane1.addTab("Resultados", jPanel4);
 
@@ -174,7 +220,7 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setText("El patio de Juego de los Grandes");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPUBound", "I/OBound" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "I/OBound", "CPUBound" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -453,13 +499,15 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProcesoActionPerformed
 
     private void ShowResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowResultsActionPerformed
-        // TODO add your handling code here:
         StringBuilder resultados = new StringBuilder();
         resultados.append("Procesos Terminados: ").append(Main.colaTerminados.getSize()).append("\n");
         resultados.append("Ciclos Totales: ").append(Main.cicloGlobal).append("\n");
         resultados.append("Utilización de CPUs: ").append(calcularUtilizacionCPUs()).append("%\n");
         ViewResults.setText(resultados.toString());
-        
+        // Actualizar gráficos
+        cpuUsageChart.fireChartChanged();
+        processTypeChart.fireChartChanged();
+        policyChart.fireChartChanged();        
     }//GEN-LAST:event_ShowResultsActionPerformed
 
     /**
@@ -498,7 +546,10 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea CPUsage;
     private javax.swing.JButton Close;
+    private javax.swing.JTextArea Planificaction;
+    private javax.swing.JTextArea Processtadistics;
     private javax.swing.JComboBox<String> QtyCPU;
     private javax.swing.JComboBox<String> SelectAlgorithm;
     private javax.swing.JTextArea ShowCPU1;
@@ -523,10 +574,14 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -538,6 +593,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -545,6 +602,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTextArea jTextArea1;
@@ -596,6 +654,19 @@ public class Home extends javax.swing.JFrame {
         actualizarCola(ShowQueueReady, Main.colaListos);
         actualizarCola(ShowQueueBlock, Main.colaBloqueados);
         actualizarCola(ShowFinishQueue, Main.colaTerminados);
+        
+        // Actualizar datasets
+        double utilizacion = calcularUtilizacionCPUs();
+        cpuUsageDataset.addValue(utilizacion, "Uso", String.valueOf(Main.cicloGlobal));
+
+        // Actualizar tipos de procesos
+        int cpuBound = contarProcesosPorTipo(true);
+        int ioBound = contarProcesosPorTipo(false);
+        processTypeDataset.setValue("CPU Bound", cpuBound);
+        processTypeDataset.setValue("I/O Bound", ioBound);
+
+        // Actualizar políticas
+        actualizarEstadisticasPoliticas();
     }
     
     private void detenerCPUs() {
@@ -637,6 +708,60 @@ public class Home extends javax.swing.JFrame {
         }
         area.setText(sb.toString());
     }
+    
+    private void crearGraficosEstadisticos() {
+    // Gráfico de uso de CPU
+    cpuUsageChart = ChartFactory.createLineChart(
+        "Uso de CPU por Ciclo", 
+        "Ciclos", 
+        "Uso (%)", 
+        cpuUsageDataset,
+        PlotOrientation.VERTICAL, 
+        true, true, false
+    );
+    cpuUsagePanel = new ChartPanel(cpuUsageChart);
+    
+    // Gráfico de tipos de procesos
+    processTypeChart = ChartFactory.createPieChart(
+        "Distribución de Procesos", 
+        processTypeDataset, 
+        true, true, false
+    );
+    processTypePanel = new ChartPanel(processTypeChart);
+    
+    // Gráfico de políticas
+    policyChart = ChartFactory.createBarChart(
+        "Estadísticas por Política", 
+        "Política", 
+        "Cantidad", 
+        policyDataset,
+        PlotOrientation.VERTICAL, 
+        true, true, false
+    );
+    policyPanel = new ChartPanel(policyChart);
+    
+    // Añadir gráficos al panel de resultados
+    jPanel4.add(cpuUsagePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 360, 240));
+    jPanel4.add(processTypePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 350, 240));
+    jPanel4.add(policyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 330, 240));
+    }
+    
+    private int contarProcesosPorTipo(boolean esCpuBound) {
+    int count = 0;
+    for (Proceso p : Main.colaTerminados) {
+        if (esCpuBound && p.isCpubound()) count++;
+        else if (!esCpuBound && p.isIobound()) count++;
+    }
+    return count;
+    }
+
+    private void actualizarEstadisticasPoliticas() {
+        policyDataset.addValue(Main.scheduler.getColaTerminados().getSize(), "Procesos", "Terminados");
+        policyDataset.addValue(Main.colaListos.getSize(), "Procesos", "En espera");
+    }
+    
+    
+    
 //    private void configurarGrafico() {
 //    chart = ChartFactory.createLineChart(
 //        "Rendimiento del Sistema", 
