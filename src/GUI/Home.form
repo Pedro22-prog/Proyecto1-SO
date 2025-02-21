@@ -206,7 +206,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel23">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Estadisticas por politica de planificaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Estadisticas en tiempo real de los estados"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

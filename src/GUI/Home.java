@@ -191,7 +191,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel4.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 350, 240));
 
-        jLabel23.setText("Estadisticas por politica de planificación");
+        jLabel23.setText("Estadisticas en tiempo real de los estados");
         jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, -1, -1));
 
         Planificaction.setColumns(20);
@@ -731,8 +731,8 @@ public class Home extends javax.swing.JFrame {
     
     // Gráfico de políticas
     policyChart = ChartFactory.createBarChart(
-        "Estadísticas por Política", 
-        "Política", 
+        "Estados de los procesos", 
+        "Estado", 
         "Cantidad", 
         policyDataset,
         PlotOrientation.VERTICAL, 
