@@ -32,6 +32,8 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 import MainPackage.SimulationConfig;
 import MainPackage.ProcesoConfig;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
 
 
 /**
@@ -89,9 +91,6 @@ public class Home extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        CPUsage = new javax.swing.JTextArea();
         jLabel24 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
@@ -186,17 +185,8 @@ public class Home extends javax.swing.JFrame {
         jLabel16.setText("Resultados Obtenidos de la simulación.");
         jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
 
-        jLabel22.setText("Resumen de resultados");
+        jLabel22.setText("Uso de Cpu");
         jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, -1));
-
-        jLabel23.setText("Uso de cpus");
-        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
-
-        CPUsage.setColumns(20);
-        CPUsage.setRows(5);
-        jScrollPane9.setViewportView(CPUsage);
-
-        jPanel4.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 270, 210));
 
         jLabel24.setText("Estadisticas por politica de planificación");
         jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 450, -1, -1));
@@ -432,9 +422,10 @@ public class Home extends javax.swing.JFrame {
 
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
         simulacionActiva = false;
-        detenerCPUs(); // Método para detener CPUs
+        detenerCPUs();
         if (hiloSimulacion != null) {
             hiloSimulacion.interrupt();
+            hiloSimulacion = null;
         }
     }//GEN-LAST:event_btnStopActionPerformed
 
@@ -653,7 +644,6 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea CPUsage;
     private javax.swing.JButton Close;
     private javax.swing.JComboBox<String> QtyCPU;
     private javax.swing.JComboBox<String> SelectAlgorithm;
@@ -691,7 +681,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
@@ -714,7 +703,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTextArea jTextArea1;
@@ -844,16 +832,23 @@ private void cargarConfiguracion(File archivo) {
         actualizarCola(ShowQueueReady, Main.colaListos);
         actualizarCola(ShowQueueBlock, Main.colaBloqueados);
         actualizarCola(ShowFinishQueue, Main.colaTerminados);
+        
         // Actualizar datasets
         double utilizacion = calcularUtilizacionCPUs();
         cpuUsageDataset.addValue(utilizacion, "Uso", String.valueOf(Main.cicloGlobal));
-    
         // Actualizar tipos de procesos
         int cpuBound = contarProcesosPorTipo(true);
         int ioBound = contarProcesosPorTipo(false);
         processTypeDataset.setValue("CPU Bound", cpuBound);
         processTypeDataset.setValue("I/O Bound", ioBound);
-    
+        double utilizacionCPU1 = (cpu1.getProceso() != null) ? 100.0 : 0.0;
+        double utilizacionCPU2 = (cpu1.getProceso() != null) ? 100.0 : 0.0;
+        double utilizacionCPU3 = (Integer.parseInt(QtyCPU.getSelectedItem().toString()) == 3 && cpu3.getProceso() != null) ? 100.0 : 0.0;
+        cpuUsageDataset.addValue(utilizacionCPU1, "CPU 1", String.valueOf(Main.cicloGlobal));
+        cpuUsageDataset.addValue(utilizacionCPU2, "CPU 2", String.valueOf(Main.cicloGlobal));
+        if (Integer.parseInt(QtyCPU.getSelectedItem().toString()) == 3) {
+            cpuUsageDataset.addValue(utilizacionCPU3, "CPU 3", String.valueOf(Main.cicloGlobal));
+        }
         // Actualizar políticas
         actualizarEstadisticasPoliticas();
     }
@@ -863,7 +858,10 @@ private void cargarConfiguracion(File archivo) {
         cpu2.interrupt();
         if (Integer.parseInt(QtyCPU.getSelectedItem().toString()) == 3) {
             cpu3.interrupt();
-        }
+        }   
+        cpu1 = new CPU(1, true); // Reinicia las CPUs
+        cpu2 = new CPU(2, true);
+        cpu3 = new CPU(3, true);
         SwingUtilities.invokeLater(() -> actualizarInterfaz());
     }
 
@@ -933,9 +931,16 @@ private void cargarConfiguracion(File archivo) {
         policyPanel = new ChartPanel(policyChart);
     
         // Añadir gráficos al panel de resultados
-        jPanel4.add(cpuUsagePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 360, 240));
-        jPanel4.add(processTypePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 350, 240));
-        jPanel4.add(policyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 330, 240));
+        jPanel4.add(cpuUsagePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 360, 240)); // Uso de CPU
+        jPanel4.add(processTypePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 350, 240)); // Tipos de procesos
+        jPanel4.add(policyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 490, 330, 240)); // Estado
+        processTypeChart = ChartFactory.createPieChart(
+            "Distribución de Procesos", 
+            processTypeDataset, 
+            true, true, false
+            );
+        PiePlot plot = (PiePlot) processTypeChart.getPlot();
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}: {1} ({2})"));
     }
     
     private int contarProcesosPorTipo(boolean esCpuBound) {
