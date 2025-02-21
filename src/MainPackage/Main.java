@@ -29,8 +29,8 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-//        Home h = new Home();
-//        h.setVisible(true);
+        Home h = new Home();
+        h.setVisible(true);
         crearProcesosPrueba();
         
 
@@ -43,9 +43,9 @@ public class Main {
         cpus[0] = new CPU(1, true);
         cpus[1] = new CPU(2, true);
         
-        for (CPU cpu : cpus) {
-            if (cpu != null) cpu.start();
-        }
+//        for (CPU cpu : cpus) {
+//            if (cpu != null) cpu.start();
+//        }
 
 //        while (true) {
 //
