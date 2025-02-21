@@ -89,7 +89,7 @@ public class Scheduller {
             case 1 -> ordenarFCFS();
             case 2 -> ordenarRoundRobin();
             case 3 -> ordenarSRT();
-            case 4 -> ordenarSJF();
+            case 4 -> ordenarSPN();
             case 5 -> ordenarHRRN();
             default -> throw new IllegalArgumentException("Política inválida");
         }
@@ -111,8 +111,8 @@ public class Scheduller {
         bubbleSort(new ComparatorSRT());
     }
 
-    private void ordenarSJF() {
-        bubbleSort(new ComparatorSJF());
+    private void ordenarSPN() {
+        bubbleSort(new ComparatorSPN());
     }
 
     private void ordenarHRRN() {
@@ -127,7 +127,7 @@ public class Scheduller {
         }
     }
 
-    private static class ComparatorSJF implements Comparator<Proceso> {
+    private static class ComparatorSPN implements Comparator<Proceso> {
         @Override
         public int compare(Proceso p1, Proceso p2) {
             return Integer.compare(p1.getTime(), p2.getTime());

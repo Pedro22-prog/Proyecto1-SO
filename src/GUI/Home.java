@@ -681,7 +681,7 @@ public class Home extends javax.swing.JFrame {
 
     private void actualizarPlanificador() {
         Main.scheduler = new Scheduller(
-        (Main.politicaActual == 2) ? 5 : 0, 
+        (Main.politicaActual == 1) ? 5 : 0, 
         Main.colaListos, 
         Main.colaBloqueados, 
         Main.colaTerminados
