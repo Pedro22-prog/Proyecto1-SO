@@ -13,11 +13,14 @@ import MainPackage.Main;
 import static MainPackage.Main.colaBloqueados;
 import static MainPackage.Main.colaListos;
 import static MainPackage.Main.colaTerminados;
-//import java.util.concurrent.Semaphore;
-//import org.jfree.chart.ChartFactory;
-//import org.jfree.chart.ChartPanel;
-//import org.jfree.chart.JFreeChart;
-//import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.plot.PlotOrientation;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import java.io.File;
@@ -49,6 +52,11 @@ public class Home extends javax.swing.JFrame {
 //    private ChartPanel chartPanel;
     private boolean simulacionActiva = false;
     private Thread hiloSimulacion;
+    private DefaultCategoryDataset cpuUsageDataset = new DefaultCategoryDataset();
+    private DefaultPieDataset processTypeDataset = new DefaultPieDataset();
+    private DefaultCategoryDataset policyDataset = new DefaultCategoryDataset();
+    private JFreeChart cpuUsageChart, processTypeChart, policyChart;
+    private ChartPanel cpuUsagePanel, processTypePanel, policyPanel;
 
     /**
      * Creates new form Home
@@ -57,6 +65,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         QtyCPU.setSelectedItem("2");
+        crearGraficosEstadisticos();
     }
 
     /**
@@ -552,7 +561,10 @@ public class Home extends javax.swing.JFrame {
         resultados.append("Ciclos Totales: ").append(Main.cicloGlobal).append("\n");
         resultados.append("Utilización de CPUs: ").append(calcularUtilizacionCPUs()).append("%\n");
         ViewResults.setText(resultados.toString());
-        
+        // Actualizar gráficos
+        cpuUsageChart.fireChartChanged();
+        processTypeChart.fireChartChanged();
+        policyChart.fireChartChanged();
     }//GEN-LAST:event_ShowResultsActionPerformed
 
     private void actualizarcicloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarcicloActionPerformed
@@ -832,6 +844,18 @@ private void cargarConfiguracion(File archivo) {
         actualizarCola(ShowQueueReady, Main.colaListos);
         actualizarCola(ShowQueueBlock, Main.colaBloqueados);
         actualizarCola(ShowFinishQueue, Main.colaTerminados);
+        // Actualizar datasets
+        double utilizacion = calcularUtilizacionCPUs();
+        cpuUsageDataset.addValue(utilizacion, "Uso", String.valueOf(Main.cicloGlobal));
+    
+        // Actualizar tipos de procesos
+        int cpuBound = contarProcesosPorTipo(true);
+        int ioBound = contarProcesosPorTipo(false);
+        processTypeDataset.setValue("CPU Bound", cpuBound);
+        processTypeDataset.setValue("I/O Bound", ioBound);
+    
+        // Actualizar políticas
+        actualizarEstadisticasPoliticas();
     }
     
     private void detenerCPUs() {
@@ -875,6 +899,57 @@ private void cargarConfiguracion(File archivo) {
             sb.append(p.toString()).append("\n");
         }
         area.setText(sb.toString());
+    }
+    
+    private void crearGraficosEstadisticos() {
+        // Gráfico de uso de CPU
+        cpuUsageChart = ChartFactory.createLineChart(
+            "Uso de CPU por Ciclo", 
+            "Ciclos", 
+            "Uso (%)", 
+            cpuUsageDataset,
+            PlotOrientation.VERTICAL, 
+            true, true, false
+        );
+        cpuUsagePanel = new ChartPanel(cpuUsageChart);
+    
+        // Gráfico de tipos de procesos
+        processTypeChart = ChartFactory.createPieChart(
+            "Distribución de Procesos", 
+            processTypeDataset, 
+            true, true, false
+        );
+        processTypePanel = new ChartPanel(processTypeChart);
+    
+        // Gráfico de políticas
+        policyChart = ChartFactory.createBarChart(
+            "Estadísticas por estado", 
+            "Estado", 
+            "Cantidad", 
+            policyDataset,
+            PlotOrientation.VERTICAL, 
+            true, true, false
+        );
+        policyPanel = new ChartPanel(policyChart);
+    
+        // Añadir gráficos al panel de resultados
+        jPanel4.add(cpuUsagePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 360, 240));
+        jPanel4.add(processTypePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 350, 240));
+        jPanel4.add(policyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 330, 240));
+    }
+    
+    private int contarProcesosPorTipo(boolean esCpuBound) {
+        int count = 0;
+        for (Proceso p : Main.colaTerminados) {
+            if (esCpuBound && p.isCpubound()) count++;
+            else if (!esCpuBound && p.isIobound()) count++;
+        }
+        return count;
+    }
+
+    private void actualizarEstadisticasPoliticas() {
+        policyDataset.addValue(Main.scheduler.getColaTerminados().getSize(), "Procesos", "Terminados");
+        policyDataset.addValue(Main.colaListos.getSize(), "Procesos", "En espera");
     }
 //    private void configurarGrafico() {
 //    chart = ChartFactory.createLineChart(
